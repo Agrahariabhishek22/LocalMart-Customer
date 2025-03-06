@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { loginUser } from "../redux/authSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { loginSuccess, setError } from "../../redux/customerSlice";
+import useAPI from "../../hooks/useAPI";
 
 const LoginForm = () => {
-  //   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState({
-    identifier: "",
-    password: "",
-  });
+  const [credentials, setCredentials] = useState({ identifier: "", password: "" });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { callApi, loading } = useAPI();
+
+  const validate = () => {
+    let newErrors = {};
+    if (!credentials.identifier.match(/^\S+@\S+\.\S+$/) && !credentials.identifier.match(/^\d{10}$/)) {
+      newErrors.identifier = "Enter a valid email or 10-digit mobile number";
+    }
+    if (credentials.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -17,20 +30,8 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    let newErrors = {};
-    if (!credentials.identifier)
-      newErrors.identifier = "Email or mobile number is required";
-    if (!credentials.password) newErrors.password = "Password is required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setLoading(false);
-      return;
-    }
-
-    // Get geolocation before sending login request
+    if (!validate()) return;
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -39,86 +40,76 @@ const LoginForm = () => {
             longitude: position.coords.longitude,
           };
 
-          try {
-            await dispatch(loginUser({ ...credentials, location })); // Send location to backend
-          } catch (error) {
-            console.error("Login failed", error);
-          } finally {
-            setLoading(false);
+          // console.log(location.latitude)
+          const result = await callApi({
+            url: "api/customer/login",
+            method: "POST",
+            data: { ...credentials, location }, 
+            headers: { "Content-Type": "application/json" },
+          });
+          
+          if (result?.success) {
+            dispatch(loginSuccess(result.customer));
+            toast.success("Logged in successfully!");
+            navigate("/");
+            setCredentials({ identifier: "", password: "" });
+          } else {
+            dispatch(setError(result?.message));
+            toast.error(result?.message);
           }
         },
         (error) => {
           console.error("Error fetching location:", error);
-          setLoading(false);
+          dispatch(setError("Failed to get location. Please enable GPS."));
+          toast.error("Failed to get location. Please enable GPS.");
         }
       );
     } else {
-      console.error("Geolocation is not supported by this browser.");
-      setLoading(false);
+      dispatch(setError("Geolocation is not supported in this browser."));
+      toast.error("Geolocation is not supported in this browser.");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background-dark dark:bg-background-light">
-      <div className="bg-heading-light dark:bg-heading-dark p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-heading-dark dark:text-heading-light text-center">
-          Login
-        </h2>
-        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-300 dark:border-gray-700">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Login</h2>
+        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-subheading-dark dark:text-subheading-light mb-1">
-              Email or Mobile Number
-            </label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">Email or Mobile Number</label>
             <input
               type="text"
               name="identifier"
               value={credentials.identifier}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background-light dark:bg-background-dark 
-             text-heading-light dark:text-heading-dark 
-             border border-subheading-dark dark:border-subheading-light 
-             rounded-lg focus:outline-none focus:ring-2 
-             focus:ring-subheading-dark dark:focus:ring-subheading-light"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.identifier && (
-              <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>
-            )}
+            {errors.identifier && <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>}
           </div>
           <div>
-            <label className="block text-subheading-dark dark:text-subheading-light mb-1">
-              Password
-            </label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">Password</label>
             <input
               type="password"
               name="password"
               value={credentials.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 bg-background-light dark:bg-background-dark 
-             text-heading-light dark:text-heading-dark 
-             border border-subheading-dark dark:border-subheading-light 
-             rounded-lg focus:outline-none focus:ring-2 
-             focus:ring-subheading-dark dark:focus:ring-subheading-light"
+              className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-            )}
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-heading-dark dark:bg-heading-light text-background-dark dark:text-background-light rounded-lg shadow-md hover:bg-subheading-dark dark:hover:bg-subheading-light transition"
+            className="w-full px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700 dark:hover:bg-blue-400 transition disabled:opacity-50"
             disabled={loading}
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        <p className="text-center text-subheading-dark dark:text-subheading-light mt-4">
+        <p className="text-center text-gray-700 dark:text-gray-300 mt-4">
           Don't have an account?{" "}
-          <a
-            href="/signup"
-            className="text-heading-dark dark:text-heading-light font-semibold"
-          >
+          <a href="/signup" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
             Sign Up
           </a>
         </p>
