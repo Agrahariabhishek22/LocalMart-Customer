@@ -8,6 +8,7 @@ import Error from "./pages/Error";
 import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import ShopDetails from "./components/home/ShopDetails";
 // import Orders from "./pages/Orders";
 // import Addresses from "./pages/Addresses";
 // import Wishlist from "./pages/Wishlist";
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/cart", element: <Cart /> },
+      { path: "/shop/:shopId", element: <ShopDetails /> },
       {
         path: "/dashboard",
         element: <Dashboard />,
