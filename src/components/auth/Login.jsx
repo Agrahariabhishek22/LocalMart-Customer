@@ -49,6 +49,7 @@ const LoginForm = () => {
           });
           
           if (result?.success) {
+            console.log("result",result)
             dispatch(loginSuccess(result.customer));
             toast.success("Logged in successfully!");
             navigate("/");

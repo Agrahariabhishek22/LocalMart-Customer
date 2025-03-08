@@ -19,17 +19,17 @@ import {
 
 const Sidebar = ({ toggleDarkMode, darkMode }) => {
   const menuItems = [
-    { name: "Profile", icon: <User size={20} />, path: "profile" },
-    { name: "Orders", icon: <ShoppingBag size={20} />, path: "orders" },
-    { name: "Addresses", icon: <MapPin size={20} />, path: "addresses" },
-    { name: "Wishlist", icon: <Heart size={20} />, path: "wishlist" },
-    { name: "Payments", icon: <CreditCard size={20} />, path: "payments" },
-    { name: "Coupons", icon: <Gift size={20} />, path: "coupons" },
-    { name: "Returns", icon: <RotateCcw size={20} />, path: "returns" },
-    { name: "Support", icon: <MessageSquare size={20} />, path: "support" },
-    { name: "Settings", icon: <Settings size={20} />, path: "settings" },
+    { name: "Update Profile", icon: <User size={20} />, path: "/dashboard/update-profile" },
+    { name: "Orders", icon: <ShoppingBag size={20} />, path: "/dashboard/orders" },
+    { name: "Update Address", icon: <MapPin size={20} />, path: "/dashboard/update-address" },
+    { name: "Wishlist", icon: <Heart size={20} />, path: "/dashboard/wishlist" },
+    { name: "Payments", icon: <CreditCard size={20} />, path: "/dashboard/payments" },
+    { name: "Coupons", icon: <Gift size={20} />, path: "/dashboard/coupons" },
+    { name: "Returns", icon: <RotateCcw size={20} />, path: "/dashboard/returns" },
+    { name: "Support", icon: <MessageSquare size={20} />, path: "/dashboard/support" },
   ];
-
+  const location = useLocation();
+  const currentPath = location.pathname;
   return (
     <aside className="w-72 bg-gradient-to-b from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 p-6 text-paragraph-light dark:text-paragraph-dark min-h-screen flex flex-col justify-between shadow-lg rounded-r-lg">
       <div>
@@ -37,16 +37,24 @@ const Sidebar = ({ toggleDarkMode, darkMode }) => {
           Dashboard
         </h2>
         <nav>
-          {menuItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.path} // ✅ Using relative path for nested routing
-              className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
-            >
-              {item.icon}
-              {item.name}
-            </Link>
-          ))}
+        {menuItems.map((item, index) => {
+        const isActive = currentPath === item.path; 
+        return (
+          <Link
+            key={index}
+            to={item.path}
+            className={`flex items-center gap-4 p-4 rounded-lg transition-all duration-200 
+              ${
+                isActive
+                  ? "bg-blue-500 text-white shadow-md scale-105" // Active state
+                  : "hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+              }`}
+          >
+            {item.icon}
+            <span className="font-medium">{item.name}</span>
+          </Link>
+        );
+      })}
         </nav>
       </div>
       <div>

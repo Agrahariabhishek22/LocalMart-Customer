@@ -6,8 +6,14 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Error from "./pages/Error";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
+import UpdateProfile from "./pages/UpdateProfile";
 import ShopDetails from "./components/home/ShopDetails";
+
+import Profile from "./pages/Profile";
+import UpdateAddress from "./pages/UpdateAddress";
+// import Orders from "./pages/Orders";
+//import Addresses from "./pages/Addresses";
+
 import Cart from "./pages/Cart";
 import PrivateRoute from "./utils/PrivateRoute";
 import PlaceOrder from "./pages/PlaceOrder";
@@ -15,6 +21,7 @@ import TestComponent from "./utils/TestComponent";
 import Orders from "./pages/Orders";
 import Wishlist from "./pages/Wishlist";
 // import Addresses from "./pages/Addresses";
+
 // import Wishlist from "./pages/Wishlist";
 // import Payments from "./pages/Payments";
 // import Coupons from "./pages/Coupons";
@@ -32,17 +39,21 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/cart", element: <Cart /> },
+      { path: "/profile", element: <Profile /> },
       { path: "/shop/:shopId", element: <ShopDetails /> },
       {
         path: "/dashboard",
         element: <Dashboard />,
         errorElement: <Error />,
         children: [
-          { index: true, element: <Navigate to="profile" replace /> }, // ✅ Default redirect to Profile
-          { path: "profile", element: <Profile /> },
-          { path: "orders", element: <Orders /> },
-          { path: "wishlist", element: <Wishlist /> },
-          // { path: "addresses", element: <Addresses /> },
+
+          { index: true, element: <Navigate to="update-profile" replace /> }, // ✅ Relative Path
+{ path: "update-profile", element: <UpdateProfile /> },
+
+          // { path: "orders", element: <Orders /> },
+          { path: "update-address", element: <UpdateAddress /> },
+          // { path: "wishlist", element: <Wishlist /> },
+
           // { path: "payments", element: <Payments /> },
           // { path: "coupons", element: <Coupons /> },
           // { path: "returns", element: <Returns /> },
