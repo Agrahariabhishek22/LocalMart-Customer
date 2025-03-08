@@ -102,10 +102,14 @@ const LoginForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700 dark:hover:bg-blue-400 transition disabled:opacity-50"
+            className="w-full flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition disabled:bg-gray-400"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <svg className="animate-spin h-5 w-5 mr-2 border-4 border-white border-t-transparent rounded-full" />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
         <p className="text-center text-gray-700 dark:text-gray-300 mt-4">

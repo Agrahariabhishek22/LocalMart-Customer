@@ -41,7 +41,7 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
             <Link to="/products" className="text-paragraph-dark dark:text-paragraph-light hover:text-subheading-dark dark:hover:text-subheading-light">
-              Products
+              Shops
             </Link>
             <Link to="/about" className="text-paragraph-dark dark:text-paragraph-light hover:text-subheading-dark dark:hover:text-subheading-light">
               About
@@ -64,7 +64,7 @@ const Navbar = () => {
           {/* Actions: Cart, Auth, Theme Toggle */}
           <div className="flex items-center gap-4">
             <button onClick={() => setDarkMode(!darkMode)} className="text-paragraph-dark dark:text-paragraph-light">
-              {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+              {darkMode ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
             </button>
             {isAuthenticated ? (
               <>

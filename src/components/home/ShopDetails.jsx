@@ -58,7 +58,7 @@ const ShopDetails = () => {
         </div>
 
         {/* Items List */}
-        <ItemList items={items} category={selectedCategory} />
+        <ItemList items={items} category={selectedCategory} shop={shop}/>
       </div>
     </div>
   );
