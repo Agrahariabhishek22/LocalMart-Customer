@@ -5,11 +5,15 @@ import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Error from "./pages/Error";
-import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import ShopDetails from "./components/home/ShopDetails";
-// import Orders from "./pages/Orders";
+import Cart from "./pages/Cart";
+import PrivateRoute from "./utils/PrivateRoute";
+import PlaceOrder from "./pages/PlaceOrder";
+import TestComponent from "./utils/TestComponent";
+import Orders from "./pages/Orders";
+import Wishlist from "./pages/Wishlist";
 // import Addresses from "./pages/Addresses";
 // import Wishlist from "./pages/Wishlist";
 // import Payments from "./pages/Payments";
@@ -36,9 +40,9 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Navigate to="profile" replace /> }, // ✅ Default redirect to Profile
           { path: "profile", element: <Profile /> },
-          // { path: "orders", element: <Orders /> },
+          { path: "orders", element: <Orders /> },
+          { path: "wishlist", element: <Wishlist /> },
           // { path: "addresses", element: <Addresses /> },
-          // { path: "wishlist", element: <Wishlist /> },
           // { path: "payments", element: <Payments /> },
           // { path: "coupons", element: <Coupons /> },
           // { path: "returns", element: <Returns /> },
@@ -46,6 +50,26 @@ const router = createBrowserRouter([
           // { path: "settings", element: <Settings /> },
         ],
       },
+      {
+        path: "/cart",
+        element:<PrivateRoute><Cart /></PrivateRoute>,
+       },
+      {
+        path: "/orders",
+        element:<Orders />,
+       },
+      {
+        path:'/wishlist',
+        element:<Wishlist/>,
+      },
+      {
+        path: "/place-order",
+        element: <PlaceOrder/>,
+       },
+      {
+        path: "/test",
+        element: <TestComponent Component={PlaceOrder} />,
+       },
     ],
   },
 ]);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios"; // Best for handling API requests
 
-const useAPI = () => {
+const useAPI = () => { 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
    
