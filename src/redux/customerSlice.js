@@ -34,8 +34,16 @@ const customerSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    updateAddress:(state,action)=>{
+      state.customer.address = state.customer.address.map((add)=>{
+        return add._id === action.payload._id ? action.payload : add;
+      })
+    },
+    addAddress:(state,action)=>{
+      state.customer.address.push(action.payload)
+    }
   },
 });
 
-export const { loginSuccess, logoutSuccess, setLoading, setError } = customerSlice.actions;
+export const { loginSuccess, logoutSuccess, setLoading, setError,updateAddress,addAddress } = customerSlice.actions;
 export default customerSlice.reducer;
