@@ -42,8 +42,13 @@ const currentPath = location.pathname
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8">
+<<<<<<< HEAD
             <Link to="/products" className="text-black dark:text-white">
               Products
+=======
+            <Link to="/products" className="text-paragraph-dark dark:text-paragraph-light hover:text-subheading-dark dark:hover:text-subheading-light">
+              Shops
+>>>>>>> b3ed13f78432861593bc70b54c9239c01f675eda
             </Link>
             <Link to="/about" className="text-black dark:text-white">
               About
@@ -65,8 +70,13 @@ const currentPath = location.pathname
 
           {/* Actions: Cart, Auth, Theme Toggle */}
           <div className="flex items-center gap-4">
+<<<<<<< HEAD
             <button onClick={() => setDarkMode(!darkMode)} className="text-black dark:text-white">
               {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+=======
+            <button onClick={() => setDarkMode(!darkMode)} className="text-paragraph-dark dark:text-paragraph-light">
+              {darkMode ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
+>>>>>>> b3ed13f78432861593bc70b54c9239c01f675eda
             </button>
             {isAuthenticated ? (
               <div className="hidden md:flex">
