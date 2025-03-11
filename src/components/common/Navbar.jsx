@@ -32,23 +32,18 @@ const currentPath = location.pathname
   };
 
   return (
-    <nav className="dark:bg-background-dark border-b-2 border-b-black dark:border-b-white bg-background-light shadow-md">
+    <nav className="sticky z-200 top-0 dark:bg-background-dark border-b-2 border-b-black dark:border-b-white bg-background-light shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex  justify-between h-16 items-center">
           {/* Logo */}
           <Link to="/" className="text-black dark:text-white text-xl font-bold">
             ShopEase
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
-<<<<<<< HEAD
-            <Link to="/products" className="text-black dark:text-white">
-              Products
-=======
-            <Link to="/products" className="text-paragraph-dark dark:text-paragraph-light hover:text-subheading-dark dark:hover:text-subheading-light">
+          <div className="hidden md:flex space-x-6">
+            <Link to="/" className="text-black dark:text-white">
               Shops
->>>>>>> b3ed13f78432861593bc70b54c9239c01f675eda
             </Link>
             <Link to="/about" className="text-black dark:text-white">
               About
@@ -69,17 +64,15 @@ const currentPath = location.pathname
           </div>
 
           {/* Actions: Cart, Auth, Theme Toggle */}
-          <div className="flex items-center gap-4">
-<<<<<<< HEAD
-            <button onClick={() => setDarkMode(!darkMode)} className="text-black dark:text-white">
+          <div className="flex items-center justify-between gap-4 w-[250px]">
+
+            <button onClick={() => setDarkMode(!darkMode)} className="text-black dark:text-white  ml-10 md:ml-0">
               {darkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-=======
-            <button onClick={() => setDarkMode(!darkMode)} className="text-paragraph-dark dark:text-paragraph-light">
-              {darkMode ? <Moon className="w-6 h-6" /> : <Sun className="w-6 h-6" />}
->>>>>>> b3ed13f78432861593bc70b54c9239c01f675eda
+
+           
             </button>
             {isAuthenticated ? (
-              <div className="hidden md:flex">
+              <div className="hidden md:flex w-[200px] items-center justify-between ">
                 <Link to="/cart" className="text-black dark:text-white">
                   <ShoppingCart className="w-6 h-6" />
                 </Link>

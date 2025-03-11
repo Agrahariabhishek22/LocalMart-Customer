@@ -6,7 +6,8 @@ const shopsSlice = createSlice({
     shopsByCategory: {},
     allShops: [],
     selectedCategory: null,
-    selectedShop: null, // ✅ Store selected shop
+    selectedShop: null,
+    productsByShop: {}, // ✅ Store products categorized by shop
     loading: false,
     error: null,
   },
@@ -43,10 +44,32 @@ const shopsSlice = createSlice({
       state.selectedCategory = action.payload;
     },
     setSelectedShop: (state, action) => {
-      state.selectedShop = action.payload; // ✅ Store selected shop
+      state.selectedShop = action.payload;
+    },
+    fetchProductsSuccess: (state, action) => {
+      const {  products } = action.payload;
+      const categorizedProducts = {};
+
+      products.forEach((product) => {
+        const category = product.category.trim();
+        if (!categorizedProducts[category]) {
+          categorizedProducts[category] = [];
+        }
+        categorizedProducts[category].push(product);
+      });
+
+      state.productsByShop = categorizedProducts;
     },
   },
 });
 
-export const { fetchShopsStart, fetchShopsSuccess, fetchShopsFailure, setSelectedCategory, setSelectedShop } = shopsSlice.actions;
+export const {
+  fetchShopsStart,
+  fetchShopsSuccess,
+  fetchShopsFailure,
+  setSelectedCategory,
+  setSelectedShop,
+  fetchProductsSuccess,
+} = shopsSlice.actions;
+
 export default shopsSlice.reducer;

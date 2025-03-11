@@ -50,7 +50,7 @@ const router = createBrowserRouter([
           { index: true, element: <Navigate to="update-profile" replace /> }, // ✅ Relative Path
 { path: "update-profile", element: <UpdateProfile /> },
 
-          // { path: "orders", element: <Orders /> },
+          { path: "orders", element: <Orders /> },
           { path: "update-address", element: <UpdateAddress /> },
           // { path: "wishlist", element: <Wishlist /> },
 

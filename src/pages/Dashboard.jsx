@@ -31,8 +31,8 @@ const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   return (
-    <aside >
-      <div>
+    <aside className="bg-background-light dark:bg-background-dark ">
+      <div >
         <h2 className="text-heading-light dark:text-heading-dark text-2xl font-semibold mb-6">
           Dashboard
         </h2>
@@ -57,14 +57,6 @@ const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
         );
       })}
         </nav>
-      </div>
-      <div>
-        <button
-          onClick={toggleDarkMode}
-          className="w-full flex items-center gap-4 p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-200"
-        >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />} Toggle Dark Mode
-        </button>
         <button
           onClick={() => dispatch(logoutSuccess())}
           className="w-full flex items-center gap-4 p-4 mt-4 bg-red-500 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
@@ -92,10 +84,10 @@ const Dashboard = () => {
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
-    <div className="flex min-h-screen bg-background-light dark:bg-background-dark">
+    <div className="flex min-h-screen  bg-background-light dark:bg-background-dark">
     
     <div
-        className={`fixed top-16 md:top-0 left-0 h-[100vh] w-64 bg-white dark:bg-gray-900 shadow-xl p-6 transition-transform transform ${
+        className={`fixed top-16 md:top-0 overflow-y overflow-scroll pb-20 left-0 h-[100vh] w-64 bg-background-light dark:bg-background-dark shadow-xl p-6 transition-transform transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0 md:w-60`}
       >
