@@ -1,8 +1,8 @@
 import React from "react";
 
-const ItemCategorySidebar = ({ categories, selectedCategory, onSelectCategory }) => {
+const ItemCategorySidebar = ({ categories, selectedCategory, onSelectCategory ,setSideBarOpen}) => {
   return (
-    <div className="w-1/4 min-h-screen bg-gray-900 p-4">
+    <div className=" min-h-screen bg-gray-900 p-4">
       <h3 className="text-xl font-semibold text-white mb-4">Categories</h3>
       <ul>
         {categories?.map((category) => (
@@ -13,7 +13,7 @@ const ItemCategorySidebar = ({ categories, selectedCategory, onSelectCategory })
                 ? "bg-blue-500 text-white"
                 : "text-gray-300 hover:bg-gray-700"
             }`}
-            onClick={() => onSelectCategory(category)}
+            onClick={() => (onSelectCategory(category),setSideBarOpen(false))}
           >
             {category}
           </li>

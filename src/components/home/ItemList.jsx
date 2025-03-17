@@ -36,23 +36,24 @@ const ItemList = ({ items, category, shop }) => {
       dispatch(addToWishlist({ id: item._id, shopId: shop._id, shopName: shop.shopName, ...item }));
     }
   };
-
+  if(Object.keys(items).length === 0)return <h1 className="py-6 text-lg text-center">No items available under this Category</h1>
+  console.log(items)
   return (
-    <div className="mt-6">
-      <h3 className="text-2xl font-semibold text-heading-dark dark:text-heading-light mb-4">
+    <div className="  mt-6">
+      <h3 className="text-2xl text-center  font-semibold text-heading-dark dark:text-heading-light mb-4">
         {category} Items
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items.map((item) => {
+        {items?.map((item) => {
           const isInCart = cart[shop._id]?.items[item._id];
           const isWishlisted = wishlist.some((wishItem) => wishItem.id === item._id);
 
           return (
             <div key={item._id} className="bg-background-dark dark:bg-background-light text-paragraph-dark dark:text-paragraph-light p-3 rounded-md shadow-md relative">
-              <img src={item.image} alt={item.name} className="w-full h-40 object-cover rounded-md" />
-              <h4 className="text-lg font-bold mt-2 text-heading-dark dark:text-heading-light">{item.name}</h4>
+              <img src={item.image} alt={item.name} className="w-full h-20 sml:h-40 object-cover rounded-md" />
+              <h4 className="text-sm sml:text-lg font-bold mt-2 text-heading-dark dark:text-heading-light">{item.name}</h4>
               <div className="flex items-center gap-2">
-                <p className="text-green-500 dark:text-green-400 font-semibold text-lg">₹{item.offerPrice}</p>
+                <p className="text-green-500 dark:text-green-400 font-semibold text-sm sml:text-lg">₹{item.offerPrice}</p>
                 {item.discount > 0 && (
                   <p className="text-gray-500 dark:text-gray-400 line-through text-sm">₹{item.salesPrice}</p>
                 )}
