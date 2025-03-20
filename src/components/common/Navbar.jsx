@@ -106,9 +106,9 @@ const currentPath = location.pathname
       {/* Mobile Menu */}
       {isOpen && (
       <div className="md:hidden dark:bg-background-dark bg-background-light p-4 shadow-lg rounded-lg space-y-1 text-base font-medium dark:text-white text-black grid grid-cols-2">
-        <Link to="/products" className={`flex items-center gap-3 p-2 rounded-lg ${currentPath === "/dashboard/products" ? "bg-gray-300 dark:bg-gray-700" : "hover:bg-gray-200 dark:hover:bg-gray-800"}`}>
-          <Package size={20} /> Products
-        </Link>
+       <Link to="/cart"className={`flex items-center gap-3 p-2 rounded-lg ${currentPath === "/dashboard/about" ? "bg-gray-300 dark:bg-gray-700" : "hover:bg-gray-200 dark:hover:bg-gray-800"}`}>
+                  <ShoppingCart size={20} /> Cart
+                </Link>
         <Link to="/about" className={`flex items-center gap-3 p-2 rounded-lg ${currentPath === "/dashboard/about" ? "bg-gray-300 dark:bg-gray-700" : "hover:bg-gray-200 dark:hover:bg-gray-800"}`}>
           <Info size={20} /> About
         </Link>

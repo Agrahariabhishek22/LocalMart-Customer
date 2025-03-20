@@ -5,28 +5,49 @@ import {setSelectedCategory, fetchShopsStart, fetchShopsSuccess, fetchShopsFailu
 import Sidebar from "../components/home/Sidebar";
 import ShopList from "../components/home/ShopList";
 import { useSelector } from "react-redux";
-
+import CardSkeleton from "../components/common/CardSkeleton";
 const HomePage = () => {
   const dispatch = useDispatch();
   const { callApi,loading,error } = useAPI();
   const {  selectedCategory } = useSelector((state) => state.shops);
 const [sidebarOpen,setSidebarOpen] = useState(false);
+  
   useEffect(() => {
     const fetchShops = async () => {
-      //dispatch(fetchShopsStart());
-      const response = await callApi({ url: "api/owner/getAllShops",method:"GET" });4
-      console.log(response)
-      if (response) {
-        dispatch(fetchShopsSuccess(response?.data));
-       dispatch(setSelectedCategory(response?.data[0]?.shopCategory))
-      } else {
-       // dispatch(fetchShopsFailure("Failed to fetch shops"));
+      if (!navigator.geolocation) {
+        console.error("Geolocation is not supported by this browser.");
+        return;
       }
-    };
+  
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
 
+          console.log(position.coords)
+          const response = await callApi({ 
+            url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
+            method: "GET" 
+          });
+  
+          console.log(response);
+          
+          if (response) {
+            dispatch(fetchShopsSuccess(response?.data));
+            dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    };
+  
     fetchShops();
   }, []);
-
+  
+if(loading){
+  return <CardSkeleton/>
+}
   return (
     <div className="min-h-screen flex bg-gray-100 dark:bg-gray-900">
      <div
