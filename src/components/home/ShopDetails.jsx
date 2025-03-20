@@ -29,7 +29,7 @@ const {callApi,loading,error} = useAPI();
     console.log("use effect called")
     const fetchAllProducts = async () => {
       const response = await callApi({ url: `api/products/${shopId}` });
-      //console.log(response)
+      console.log(response)
       if (response?.success) {
         dispatch(fetchProductsSuccess({ shopId, products: response.data }));
       }
