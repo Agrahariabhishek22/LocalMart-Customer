@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {fetchProductsSuccess} from "../../redux/shopsSlice"
+import { LucideMenu, LucideX, LucideMapPin, LucidePhone, LucideUser } from "lucide-react"; // Modern Icons
 //import { fetchShopProducts } from "../../redux/shopsSlice"; // Import the new action
 import ItemCategorySidebar from "./ItemCategorySidebar";
 import ItemList from "./ItemList";
@@ -18,7 +19,7 @@ const {callApi,loading,error} = useAPI();
   const shop = useSelector((state) => {
     return Object.values(state.shops.shopsByCategory).flat().find((shop) => shop._id === shopId);
   });
- // console.log(shop)
+ console.log(shop)
 
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
   // console.log(productsByCategory);
@@ -29,10 +30,11 @@ const {callApi,loading,error} = useAPI();
     //if (!shopId ) return;
     // console.log("use effect called")
     const fetchAllProducts = async () => {
-      const response = await callApi({ url: `api/products/${shopId}`});
-    console.log(response)
+
+      const response = await callApi({ url: `api/products/${shopId}` });
+      console.log(response)
       if (response?.success) {
-        dispatch(fetchProductsSuccess({ shopId, products: response.products }));
+        dispatch(fetchProductsSuccess({ shopId, products: response.data }));
       }
     };
 
@@ -64,16 +66,28 @@ const {callApi,loading,error} = useAPI();
         {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
       </button>
 
-      {/* Shop Details & Items */}
-      <div className="flex-1 p-6">
+     
         {/* Shop Information */}
-        <div className="bg-white text-gray-800 p-4 rounded-md shadow-md">
-          <h2 className="text-2xl font-bold text-blue-600">{shop?.shopName}</h2>
-          <p className="text-gray-600">Owner: {shop?.ownerName}</p>
-          <p className="text-gray-600">Address: {shop?.shopAddress}</p>
-          <p className="text-gray-600">Contact: {shop?.mobileNumber}</p>
-        </div>
+        <div className="flex-1 p-6">
+        {/* Shop Information with Glassmorphism Effect */}
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <h2 className="text-[22px] sml:text-2xl md:text-3xl font-extrabold text-blue-600 dark:text-blue-400">{shop?.shopName}</h2>
 
+          <div className="mt-2 space-y-2 text-gray-600 dark:text-gray-300">
+            <p className="flex items-center gap-2">
+              <LucideUser size={20} className="text-blue-500 dark:text-blue-400" />
+              <span>Owner: {shop?.ownerName}</span>
+            </p>
+            <p className="flex items-center gap-2">
+              <LucideMapPin size={20} className="text-red-500 dark:text-red-400" />
+              <span>Address: {shop?.shopAddress}</span>
+            </p>
+            <p className="flex items-center gap-2">
+              <LucidePhone size={20} className="text-green-500 dark:text-green-400" />
+              <span>Contact: {shop?.mobileNumber}</span>
+            </p>
+          </div>
+        </div>
         {/* Items List */}
         <ItemList items={productsByCategory[selectedCategory] || []} category={selectedCategory} shop={shop} />
       </div>

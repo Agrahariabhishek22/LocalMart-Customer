@@ -5,6 +5,7 @@ import { addNotification } from "../redux/NotificationSlice";
 import { updateOrder } from "../redux/OrderSlice";
 import { addLowStock } from "../redux/LowStockSlice";
 
+
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
@@ -12,7 +13,7 @@ export const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const owner = { shopId: "65d8c8e2a4f3b6b4c8a54321" };
+    const owner = { shopId: "67cc0e494ba0465f69296021" };
     if (!owner?.shopId) return;
 
     const newSocket = io("http://localhost:3000", { withCredentials: true });
