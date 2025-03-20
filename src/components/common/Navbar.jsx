@@ -3,7 +3,7 @@ import { Link,useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../../redux/customerSlice";
 import {LogOut, User, ShoppingCart, Heart, ClipboardList, LayoutDashboard, Info, Phone, Package, LogIn, UserPlus, Menu, X,  Sun, Moon, } from "lucide-react";
-
+import NotificationBell from "./Notification";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +48,7 @@ const currentPath = location.pathname
             <Link to="/about" className="text-black dark:text-white">
               About
             </Link>
+            <NotificationBell/>
             <Link to="/contact" className="text-black dark:text-white">
               Contact
             </Link>

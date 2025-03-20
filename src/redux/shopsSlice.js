@@ -47,9 +47,9 @@ const shopsSlice = createSlice({
       state.selectedShop = action.payload;
     },
     fetchProductsSuccess: (state, action) => {
-      const {  products } = action.payload;
+       const {  products } = action.payload;
       const categorizedProducts = {};
-
+ 
       products.forEach((product) => {
         const category = product.category.trim();
         if (!categorizedProducts[category]) {

@@ -1,0 +1,43 @@
+import { createContext, useContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { addNotification } from "../redux/NotificationSlice";
+import { updateOrder } from "../redux/OrderSlice";
+import { addLowStock } from "../redux/LowStockSlice";
+
+export const SocketContext = createContext();
+
+export const SocketProvider = ({ children }) => {
+  const [socket, setSocket] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const owner = { shopId: "65d8c8e2a4f3b6b4c8a54321" };
+    if (!owner?.shopId) return;
+
+    const newSocket = io("http://localhost:3000", { withCredentials: true });
+
+    newSocket.emit("joinCustomer", owner.shopId);
+
+    newSocket.on("OrderStatusUpdated", (data) => {
+      console.log("New order received:", data);
+    //   dispatch(updateOrder(data?.order));
+      dispatch(addNotification({ 
+        type: "order", 
+        message: data.message, 
+      }));
+    });
+
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [dispatch]);
+
+  return (
+    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+  );
+};
+
+export const useSocket = () => useContext(SocketContext);

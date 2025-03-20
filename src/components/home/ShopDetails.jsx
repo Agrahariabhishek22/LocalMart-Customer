@@ -10,9 +10,10 @@ import useAPI from "../../hooks/useAPI";
 const ShopDetails = () => {
   const { shopId } = useParams();
   const dispatch = useDispatch();
- 
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
 const {callApi,loading,error} = useAPI();
+
   // Get shop details from Redux store
   const shop = useSelector((state) => {
     return Object.values(state.shops.shopsByCategory).flat().find((shop) => shop._id === shopId);
@@ -20,17 +21,18 @@ const {callApi,loading,error} = useAPI();
  // console.log(shop)
 
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
-
+  // console.log(productsByCategory);
+  
   const [selectedCategory, setSelectedCategory] = useState(Object.keys(productsByCategory)[0]);
 //console.log( Object.keys(productsByCategory)[0])
   useEffect(() => {
     //if (!shopId ) return;
-    console.log("use effect called")
+    // console.log("use effect called")
     const fetchAllProducts = async () => {
-      const response = await callApi({ url: `api/products/${shopId}` });
-      //console.log(response)
+      const response = await callApi({ url: `api/products/${shopId}`});
+    console.log(response)
       if (response?.success) {
-        dispatch(fetchProductsSuccess({ shopId, products: response.data }));
+        dispatch(fetchProductsSuccess({ shopId, products: response.products }));
       }
     };
 
