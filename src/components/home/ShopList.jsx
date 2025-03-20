@@ -16,14 +16,14 @@ const ShopList = () => {
         navigate(`/shop/${shopId}`);
     };
   return (
-    <div className="flex-1 p-6 dark:text-white">
-      <h2 className="text-2xl font-semibold mb-4">
+    <div className="flex-1 p-6  text-black dark:text-white">
+      <h2 className="text-2xl font-semibold  mb-4">
         {selectedCategory ? `${selectedCategory} Shops` : "Select a Category"}
       </h2>
       {shops.length === 0 ? (
         <p>No shops available in this category.</p>
       ) : (
-        <div className="grid grid-cols-1 sml:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {shops.map((shop) => (
             <div key={shop._id} 
             onClick={() => handleShopClick(shop._id)}

@@ -2,9 +2,9 @@ import { categories } from "../../data/categories";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCategory } from "../../redux/shopsSlice";
 
-const Sidebar = ({setSideBar}) => {
+const Sidebar = ({setSideBar,selectedCategory}) => {
   const dispatch = useDispatch();
-  const selectedCategory = useSelector((state) => state.shops.selectedCategory);
+  //const selectedCategory = useSelector((state) => state.shops.selectedCategory);
 
   return (
     <div className="text-black dark:text-white">
