@@ -11,8 +11,8 @@ const ItemCategorySidebar = ({ categories, selectedCategory, onSelectCategory ,s
             key={category}
             className={`cursor-pointer p-2 rounded-md mb-2 ${
               selectedCategory === category
-                ? "bg-blue-500 text-white"
-                : "text-gray-300 hover:bg-gray-700"
+              ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-white"
+              : "hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
             onClick={() => (onSelectCategory(category),setSideBarOpen(false))}
           >

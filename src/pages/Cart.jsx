@@ -4,6 +4,7 @@ import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from ".
 import { useNavigate } from "react-router-dom";
 import { Plus, Minus, Trash } from "lucide-react";
 import toast from "react-hot-toast";
+import EmptyState from "./EmptyState";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Cart = () => {
       </h2>
 
       {Object.keys(cart).length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">Your cart is empty.</p>
+        <EmptyState/>
       ) : (
         Object.entries(cart).map(([shopId, shopData]) => {
           const shopTotal = Object.values(shopData.items).reduce(

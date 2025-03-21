@@ -44,7 +44,9 @@ const {callApi,loading,error} = useAPI();
   if (!shop) return <p className="text-center text-gray-500">Shop not found</p>;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+    <div className="flex min-h-screen bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-700
+
+ text-white">
       {/* Sidebar for Categories */}
       <div
         className={`fixed top-16 md:top-0 overflow-y-auto pb-20 left-0 h-[100vh] w-64 bg-background-light dark:bg-background-dark shadow-xl transition-transform transform ${
@@ -60,7 +62,8 @@ const {callApi,loading,error} = useAPI();
       </div>
 
       <button
-        className="z-100 fixed bottom-0 md:hidden left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-t-lg shadow-lg"
+        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-11 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500 
+ text-white px-4 py-2 rounded-t-lg shadow-lg"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
@@ -68,10 +71,10 @@ const {callApi,loading,error} = useAPI();
 
      
         {/* Shop Information */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 ">
         {/* Shop Information with Glassmorphism Effect */}
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-          <h2 className="text-[22px] sml:text-2xl md:text-3xl font-extrabold text-blue-600 dark:text-blue-400">{shop?.shopName}</h2>
+        <div className="bg-white/80  dark:bg-gray-800/80  p-6 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <h2 className="text-[22px] sml:text-2xl md:text-3xl font-heading text-center font-extrabold text-blue-600 dark:text-blue-400">{shop?.shopName}</h2>
 
           <div className="mt-2 space-y-2 text-gray-600 dark:text-gray-300">
             <p className="flex items-center gap-2">
