@@ -2,8 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/NotificationSlice";
-import { updateOrder } from "../redux/OrderSlice";
-import { addLowStock } from "../redux/LowStockSlice";
+
 
 
 export const SocketContext = createContext();

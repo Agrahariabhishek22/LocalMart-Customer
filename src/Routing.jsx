@@ -1,13 +1,14 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import App from "./App";
+import Shops from "./pages/Shops";
 import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Error from "./pages/Error";
 import Dashboard from "./pages/Dashboard";
 import UpdateProfile from "./pages/UpdateProfile";
-import ShopDetails from "./components/home/ShopDetails";
+import ShopDetails from "./components/shops/ShopDetails";
 import Profile from "./pages/Profile";
 import UpdateAddress from "./pages/UpdateAddress";
 import Cart from "./pages/Cart";
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/shops", element: <Shops /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/cart", element: <Cart /> },

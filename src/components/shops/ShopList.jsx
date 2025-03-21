@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom"
 const ShopList = () => {
     const { shopsByCategory, selectedCategory } = useSelector((state) => state.shops);
     const navigate = useNavigate();
-    
+    console.log(shopsByCategory)
+    console.log(selectedCategory)
     // Ensure shopsByCategory exists before accessing
     const shops = selectedCategory && shopsByCategory 
       ? shopsByCategory[selectedCategory] || [] 
