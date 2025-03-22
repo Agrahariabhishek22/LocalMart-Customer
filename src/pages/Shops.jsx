@@ -70,10 +70,10 @@ if(loading){
       </div>
       <ShopList />
       <button
-        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-11 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500  text-white px-4 py-2 rounded-t-lg shadow-lg"
+        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-14 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500  text-white px-4 py-2 rounded-t-lg shadow-lg"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
-        {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+        {sidebarOpen ? "Close Categories" : "Open Categories"}
       </button>
       
     </div>

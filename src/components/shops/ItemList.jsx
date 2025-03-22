@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart, increaseQuantity, decreaseQuantity } from "../../redux/cartSlice";
@@ -12,7 +12,7 @@ const ItemList = ({ items, category, shop }) => {
   const user = useSelector((state) => state.customer.customer);
   const cart = useSelector((state) => state.cart);
   const wishlist = useSelector((state) => state.wishlist);
-
+const [search,setSearch] = useState("");
   const handleCartAction = (item) => {
     if (!user) {
       navigate("/login");
@@ -20,7 +20,7 @@ const ItemList = ({ items, category, shop }) => {
     }
     dispatch(addToCart({ shopId: shop._id, item: { ...item, shopName: shop.shopName } }));
   };
-
+  
   const handleIncrease = (shopId, itemId) => {
     dispatch(increaseQuantity({ shopId, itemId }));
   };
@@ -39,11 +39,46 @@ const ItemList = ({ items, category, shop }) => {
   };
   if(Object.keys(items).length === 0)return <h1 className="py-6 text-lg text-center"><EmptyState/></h1>
   console.log(items)
+ if(search !== ""){
+  items = items.filter((item)=>(
+    item.name.toLowerCase().includes(search.toLowerCase().trim())
+  ))
+ }
+  function debounce(fun,time){
+    let timerId;
+    return (value)=>{
+      clearTimeout(timerId)
+      setTimeout(()=>{
+        fun(value)
+      },time)
+    }
+  }
+  const handleChange = debounce((value)=>{
+    console.log(value)
+    setSearch(value)
+  },800)
+
   return (
     <div className="  mt-6">
+      
       <h3 className="text-2xl font-heading text-center  font-semibold text-heading-dark dark:text-heading-light mb-4">
-        {category} Items
+        {category} Products
       </h3>
+
+      {/* Search  */}
+      <div className=" my-2 w-full max-w-2xl flex items-center bg-gradient-to-r from-gray-800 to-gray-900 rounded-full shadow-md overflow-hidden">
+        
+        <input
+          type="text"
+          onChange={(e) => handleChange(e.target.value)}
+         
+          placeholder="Search  by product name ..."
+          
+          className="w-full p-3 bg-transparent text-white placeholder-gray-400 focus:outline-none"
+        />
+  
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items?.map((item) => {
           const isInCart = cart[shop._id]?.items[item._id];

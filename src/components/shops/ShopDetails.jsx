@@ -24,7 +24,7 @@ const {callApi,loading,error} = useAPI();
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
   // console.log(productsByCategory);
   
-  const [selectedCategory, setSelectedCategory] = useState(Object.keys(productsByCategory)[0]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 //console.log( Object.keys(productsByCategory)[0])
   useEffect(() => {
     //if (!shopId ) return;
@@ -44,29 +44,30 @@ const {callApi,loading,error} = useAPI();
   if (!shop) return <p className="text-center text-gray-500">Shop not found</p>;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-700
+    <div className="flex pl-4 min-h-screen bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-700
 
  text-white">
       {/* Sidebar for Categories */}
       <div
-        className={`fixed top-16 md:top-0 overflow-y-auto pb-20 left-0 h-[100vh] w-64 bg-background-light dark:bg-background-dark shadow-xl transition-transform transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:relative md:translate-x-0 md:w-60 z-100`}
-      >
-        <ItemCategorySidebar
-          categories={shop?.itemCategories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          setSideBarOpen={setSidebarOpen}
-        />
-      </div>
+  className={`fixed top-16 md:top-0 overflow-y-auto pb-20 -left-4 h-[100vh] w-64 bg-background-light dark:bg-background-dark shadow-xl transition-transform transform ${
+    sidebarOpen ? "translate-x-0" : "-translate-x-full"
+  } md:relative md:translate-x-0 md:w-60 z-100 scrollbar-hide`}
+>
+  <ItemCategorySidebar
+    categories={shop?.itemCategories}
+    selectedCategory={selectedCategory}
+    onSelectCategory={setSelectedCategory}
+    setSideBarOpen={setSidebarOpen}
+  />
+</div>
+
 
       <button
-        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-11 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500 
+        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-14 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500 
  text-white px-4 py-2 rounded-t-lg shadow-lg"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
-        {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
+        {sidebarOpen ? "Close Categories" : "Open Categories"}
       </button>
 
      

@@ -5,7 +5,7 @@ const shopsSlice = createSlice({
   initialState: {
     shopsByCategory: {},
    
-    selectedCategory: null,
+    selectedCategory: "All",
    
     productsByShop: {}, 
     
@@ -13,9 +13,9 @@ const shopsSlice = createSlice({
   reducers: {
     
     fetchShopsSuccess: (state, action) => {
-      state.loading = false;
      
-      const categorizedShops = {};
+     
+      const categorizedShops = {"All":[]};
       if (!Array.isArray(action.payload)) {
         console.error("Error: action.payload is not an array");
         return;
@@ -23,10 +23,15 @@ const shopsSlice = createSlice({
 
       action.payload.forEach((shop) => {
         let matchedCategory = shop.shopCategory.trim();
+        if(!shop.itemCategories.includes("All")){
+          shop.itemCategories.push("All")
+          shop.itemCategories.sort();
+        }
         if (!categorizedShops[matchedCategory]) {
           categorizedShops[matchedCategory] = [];
         }
         categorizedShops[matchedCategory].push(shop);
+        categorizedShops["All"].push(shop);
       });
 
       state.shopsByCategory = categorizedShops;
@@ -38,14 +43,16 @@ const shopsSlice = createSlice({
    
     fetchProductsSuccess: (state, action) => {
        const {  products } = action.payload;
-      const categorizedProducts = {};
+      const categorizedProducts = {"All":[]};
  
       products.forEach((product) => {
         const category = product.category.trim();
         if (!categorizedProducts[category]) {
           categorizedProducts[category] = [];
+          
         }
         categorizedProducts[category].push(product);
+        categorizedProducts["All"].push(product);
       });
 
       state.productsByShop = categorizedProducts;

@@ -2,7 +2,7 @@ import { MessageSquare } from "lucide-react";
 
 const EmptyState = ({ message = "No items available", slogan = "Looks like it's empty here!" }) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center py-10 px-5">
+    <div className="flex  flex-col items-center justify-center text-center py-10 px-5">
       {/* Icon */}
       <div className="p-4 bg-gradient-to-r  dark:bg-black from-blue-500 to-purple-500 text-white rounded-full shadow-lg">
         <MessageSquare size={40} />

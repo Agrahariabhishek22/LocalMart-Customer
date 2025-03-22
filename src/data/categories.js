@@ -1,4 +1,5 @@
 export const categories = [
+  "All",
     "Electronics",
     "Grocery",
     "Grocery Store",

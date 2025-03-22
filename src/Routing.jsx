@@ -17,7 +17,8 @@ import PlaceOrder from "./pages/PlaceOrder";
 import TestComponent from "./utils/TestComponent";
 import Orders from "./pages/Orders";
 import Wishlist from "./pages/Wishlist";
-
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 // import Payments from "./pages/Payments";
 // import Coupons from "./pages/Coupons";
 // import Returns from "./pages/Returns";
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "/place-order",
         element: <PlaceOrder/>,
+       },
+       {
+        path:"/about",
+        element:<AboutUs/>
+       },
+       {
+        path:"/contact",
+        element:<ContactUs/>
        },
       {
         path: "/test",
