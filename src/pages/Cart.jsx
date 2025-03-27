@@ -4,7 +4,7 @@ import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from ".
 import { useNavigate } from "react-router-dom";
 import { Plus, Minus, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-
+ 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

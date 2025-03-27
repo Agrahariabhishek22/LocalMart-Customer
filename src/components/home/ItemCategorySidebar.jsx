@@ -1,7 +1,7 @@
 import React from "react";
 
 const ItemCategorySidebar = ({ categories, selectedCategory, onSelectCategory ,setSideBarOpen}) => {
-  console.log(categories)
+  // console.log(categories)
   return (
     <div className=" min-h-screen bg-gray-900 p-4">
       <h3 className="text-xl font-semibold text-white mb-4">Categories</h3>

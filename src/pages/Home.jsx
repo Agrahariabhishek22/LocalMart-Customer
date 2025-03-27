@@ -29,13 +29,13 @@ const [sidebarOpen,setSidebarOpen] = useState(false);
         async (position) => {
           const { latitude, longitude } = position.coords;
 
-          console.log(position.coords)
+          // console.log(position.coords)
           const response = await callApi({ 
             url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
             method: "GET" 
           });
   
-          console.log(response);
+          // console.log(response);
           
           if (response) {
             dispatch(fetchShopsSuccess(response?.data));

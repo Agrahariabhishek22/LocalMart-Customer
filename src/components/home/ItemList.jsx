@@ -37,7 +37,7 @@ const ItemList = ({ items, category, shop }) => {
     }
   };
   if(Object.keys(items).length === 0)return <h1 className="py-6 text-lg text-center">No items available under this Category</h1>
-  console.log(items)
+  // console.log(items)
   return (
     <div className="  mt-6">
       <h3 className="text-2xl text-center  font-semibold text-heading-dark dark:text-heading-light mb-4">

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginSuccess, setError } from "../../redux/customerSlice";
 import useAPI from "../../hooks/useAPI";
+import { Link,useLocation } from "react-router-dom";
 
 const LoginForm = () => {
   const [credentials, setCredentials] = useState({ identifier: "", password: "" });
@@ -112,6 +113,11 @@ const LoginForm = () => {
             )}
           </button>
         </form>
+        <Link to="/forgot-password">
+          <p className="mt-1 ml-auto max-w-max text-xs text-blue-100">
+            Forgot Password
+          </p>
+        </Link>
         <p className="text-center text-gray-700 dark:text-gray-300 mt-4">
           Don't have an account?{" "}
           <a href="/signup" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
