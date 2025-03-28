@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { clearCart } from "../redux/cartSlice";
 import toast from "react-hot-toast";
 import useAPI from "../hooks/useAPI"; // Import the custom API hook
-import { buyCourse } from "../services/paymentIntegration";
+import { buyProducts } from "../services/paymentIntegration";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const formatProducts = (shopData) => {
     console.log("Before UPI payment");
 
     if (paymentMethod !== "COD") {
-        await buyCourse(totalAmount, navigate, dispatch, callApi, orderData);
+        await buyProducts(totalAmount, navigate, dispatch, callApi, orderData);
     } else {
         console.log("Placing order for COD");
         const response = await callApi({

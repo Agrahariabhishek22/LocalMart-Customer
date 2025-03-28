@@ -2,16 +2,17 @@ import { useState } from "react"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { BiArrowBack } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
 import useAPI from "../../hooks/useAPI"
+import toast from "react-hot-toast"
 
 function UpdatePassword() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const location = useLocation()
-  const {callApi}=useAPI;
+  const { callApi } = useAPI()
 
-  const { loading } = useSelector((state) => state.auth)
+  const { loading } = useSelector((state) => state.customer)
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -29,45 +30,46 @@ function UpdatePassword() {
     }))
   }
 
-  const handleOnSubmit = async(e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault()
     const token = location.pathname.split("/").at(-1)
-    console.log(token)
-    try{const response = await callApi({
-        method:"POST",
-        url:"api/customer/reset-password",
-        data:{password, confirmPassword, token}
-      });
-      
-      console.log("RESET Password RESPONSE ... ", response);
+    try {
+      const response = await callApi({
+        url: "api/customer/reset-password",
+        method: "POST",
+        data: { password, confirmPassword, token },
+      })
 
-      if (!response.data.success) {
-        throw new Error(response.data.message);
+      if (!response.success) {
+        throw new Error(response.data.message)
       }
-      toast.success("Password has been reset successfully");}
-      catch (error) {
-        console.log("RESET PASSWORD TOKEN Error", error);
-        toast.error("Unable to reset password");
-      }
-}
+      toast.success("Password has been reset successfully")
+      navigate('/login');
+    } catch (error) {
+      console.log("RESET PASSWORD TOKEN Error", error)
+      toast.error("Unable to reset password")
+    }
+  }
 
   return (
-    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
       {loading ? (
         <div className="spinner"></div>
       ) : (
-        <div className="max-w-[500px] p-4 lg:p-8">
-          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
-            Choose new password
+        <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+            Choose New Password
           </h1>
-          <p className="my-4 text-[1.125rem] leading-[1.625rem] text-richblack-100">
-            Almost done. Enter your new password and youre all set.
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+            Almost done. Enter your new password and you’re all set.
           </p>
-          <form onSubmit={handleOnSubmit}>
-            <label className="relative">
-              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                New Password <sup className="text-pink-200">*</sup>
-              </p>
+
+          <form onSubmit={handleOnSubmit} className="mt-6">
+            {/* Password Field */}
+            <div className="relative">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                New Password <sup className="text-red-500">*</sup>
+              </label>
               <input
                 required
                 type={showPassword ? "text" : "password"}
@@ -75,23 +77,21 @@ function UpdatePassword() {
                 value={password}
                 onChange={handleOnChange}
                 placeholder="Enter Password"
-                className="form-style w-full !pr-10"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 pr-10 text-gray-900 shadow-sm focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
               <span
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+                className="absolute right-3 top-10 cursor-pointer text-gray-600 dark:text-gray-300"
               >
-                {showPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-                ) : (
-                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-                )}
+                {showPassword ? <AiOutlineEyeInvisible size={22} /> : <AiOutlineEye size={22} />}
               </span>
-            </label>
-            <label className="relative mt-3 block">
-              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                Confirm New Password <sup className="text-pink-200">*</sup>
-              </p>
+            </div>
+
+            {/* Confirm Password Field */}
+            <div className="relative mt-4">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                Confirm New Password <sup className="text-red-500">*</sup>
+              </label>
               <input
                 required
                 type={showConfirmPassword ? "text" : "password"}
@@ -99,32 +99,29 @@ function UpdatePassword() {
                 value={confirmPassword}
                 onChange={handleOnChange}
                 placeholder="Confirm Password"
-                className="form-style w-full !pr-10"
+                className="mt-1 w-full rounded-lg border border-gray-300 p-2 pr-10 text-gray-900 shadow-sm focus:border-yellow-400 focus:ring-yellow-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
               <span
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
-                className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+                className="absolute right-3 top-10 cursor-pointer text-gray-600 dark:text-gray-300"
               >
-                {showConfirmPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-                ) : (
-                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-                )}
+                {showConfirmPassword ? <AiOutlineEyeInvisible size={22} /> : <AiOutlineEye size={22} />}
               </span>
-            </label>
+            </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900"
+              className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               Reset Password
             </button>
           </form>
-          <div className="mt-6 flex items-center justify-between">
-            <Link to="/login">
-              <p className="flex items-center gap-x-2 text-richblack-5">
-                <BiArrowBack /> Back To Login
-              </p>
+
+          {/* Back to Login */}
+          <div className="mt-4 flex justify-center">
+            <Link to="/login" className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <BiArrowBack size={18} /> Back to Login
             </Link>
           </div>
         </div>

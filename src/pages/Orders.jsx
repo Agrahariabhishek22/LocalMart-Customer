@@ -11,7 +11,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await callApi({ url: "api/order/customer" });
-      console.log(response);
+      // console.log(response);
       
       if (response?.success) {
         const groupedOrders = groupOrdersByShop(response.orders);

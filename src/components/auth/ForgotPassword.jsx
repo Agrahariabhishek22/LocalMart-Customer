@@ -1,86 +1,86 @@
-import { useState } from "react"
-import { BiArrowBack } from "react-icons/bi"
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { BiArrowBack } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import useAPI from "../../hooks/useAPI";
 
 function ForgotPassword() {
-  const [email, setEmail] = useState("")
-  const [emailSent, setEmailSent] = useState(false)
-  const dispatch = useDispatch()
-//   const { loading } = useSelector((state) => state.auth)
+  const [email, setEmail] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+  const { callApi } = useAPI();
+  
+  const { loading } = useSelector((state) => state.customer);
 
-  const handleOnSubmit = async(e) => {
-    e.preventDefault()
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
     try {
-         const response = await callAPI({
-            method:"POST",
-              url:"api/customer/reset-password-token",
-               data:{email}});
-        // console.log("enter2")
-  
-        console.log("Reset Password Token Response....", response);
-  
-        if (!response.data.success) {
-          throw new Error(response.data.message);
-        }
-        toast.success("Reset email sent");
-        setEmailSent(true);
-      } catch (error) {
-        console.log("Reset Password Token Error");
-        toast.error("Cannot send email");
+      const response = await callApi({
+        url: "api/customer/reset-password-token",
+        method: "POST",
+        data: { email },
+      });
+
+      console.log("Reset Password Token Response....", response);
+
+      if (!response.success) {
+        throw new Error(response.data.message);
       }
-  }
+      toast.success("Reset email sent");
+      setEmailSent(true);
+    } catch (error) {
+      console.log("Reset Password Token Error", error);
+      toast.error("Cannot send email");
+    }
+  };
 
   return (
-    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+    <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-gray-100 dark:bg-gray-900 px-4">
       {loading ? (
         <div className="spinner"></div>
       ) : (
-        <div className="max-w-[500px] p-4 lg:p-8">
-          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
-            {!emailSent ? "Reset your password" : "Check email"}
+        <div className="max-w-[500px] w-full bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 lg:p-8 transition-all">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
+            {!emailSent ? "Reset Your Password" : "Check Your Email"}
           </h1>
-          <p className="my-4 text-[1.125rem] leading-[1.625rem] text-richblack-100">
+          <p className="my-4 text-gray-600 dark:text-gray-300 text-center">
             {!emailSent
-              ? "Have no fear. We'll email you instructions to reset your password. If you dont have access to your email we can try account recovery"
-              : `We have sent the reset email to ${email}`}
+              ? "We'll send you an email with instructions to reset your password. If you don’t have access to your email, we can help you recover your account."
+              : `We have sent a reset email to ${email}`}
           </p>
-          <form onSubmit={handleOnSubmit}>
+          <form onSubmit={handleOnSubmit} className="space-y-4">
             {!emailSent && (
-              <label className="w-full">
-                <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                  Email Address <sup className="text-pink-200">*</sup>
-                </p>
+              <div>
+                <label className="block text-gray-800 dark:text-gray-200 font-medium">
+                  Email Address <sup className="text-red-500">*</sup>
+                </label>
                 <input
                   required
                   type="email"
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter email address"
-                  className="form-style w-full"
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-2 mt-1 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100"
                 />
-              </label>
+              </div>
             )}
             <button
               type="submit"
-              className="mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richblack-900"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all dark:bg-blue-500 dark:hover:bg-blue-600"
             >
-              {!emailSent ? "Sumbit" : "Resend Email"}
+              {!emailSent ? "Submit" : "Resend Email"}
             </button>
           </form>
-          <div className="mt-6 flex items-center justify-between">
-            <Link to="/login">
-              <p className="flex items-center gap-x-2 text-richblack-5">
-                <BiArrowBack /> Back To Login
-              </p>
+          <div className="mt-6 flex justify-center">
+            <Link to="/login" className="flex items-center gap-x-2 text-blue-600 dark:text-blue-400 hover:underline">
+              <BiArrowBack /> Back to Login
             </Link>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;

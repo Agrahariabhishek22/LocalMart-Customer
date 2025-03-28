@@ -22,7 +22,7 @@ import { clearCart } from "../redux/cartSlice";
 }
 
 
-export async function buyCourse(amount, navigate, dispatch, callApi, orderData) {
+export async function buyProducts(amount, navigate, dispatch, callApi, orderData) {
     const toastId = toast.loading("Loading...");
     try {
         // Load Razorpay script
