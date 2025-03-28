@@ -80,64 +80,72 @@ const [search,setSearch] = useState("");
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items?.map((item) => {
-          const isInCart = cart[shop._id]?.items[item._id];
-          const isWishlisted = wishlist.some((wishItem) => wishItem.id === item._id);
+      {items?.map((item) => {
+  const isInCart = cart[shop._id]?.items[item._id];
+  const isWishlisted = wishlist.some((wishItem) => wishItem.id === item._id);
+  const isOutOfStock = item.quantity <= 0;
 
-          return (
-            <div 
-  key={item._id} 
-  className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 
-             text-paragraph-dark dark:text-paragraph-light p-3 rounded-md shadow-md relative"
->
-  <img 
-    src={item.image} 
-    alt={item.name} 
-    className="w-full h-20 md:h-40 border-2 border-background-dark dark:border-black object-cover rounded-md" 
-  />
-  <h4 className="text-sm sml:text-lg font-bold mt-2 text-heading-light dark:text-heading-dark">
-    {item.name}
-  </h4>
-  
-  <div className="flex items-center gap-2">
-    <p className="text-green-500 dark:text-green-400 font-semibold text-sm sml:text-lg">
-      ₹{item.offerPrice}
-    </p>
-    {item.discount > 0 && (
-      <p className="text-gray-500 dark:text-red-400 line-through text-sm">
-        ₹{item.salesPrice}
-      </p>
-    )}
-  </div>
-
-  {/* Wishlist Button */}
-  <button
-    className={`absolute top-2 right-2 p-2 rounded-full ${
-      isWishlisted ? "text-red-500" : "text-paragraph-dark dark:text-paragraph-light"
-    } hover:text-red-500`}
-    onClick={() => handleWishlistToggle(item)}
-  >
-    <Heart fill={`${isWishlisted ? "red" : "white"}`} />
-  </button>
-
-  {isInCart ? (
-    <div className="flex items-center justify-between mt-2 bg-blue-500 dark:bg-blue-600 text-white py-1 px-3 rounded-md">
-      <button onClick={() => handleDecrease(shop._id, item._id)} className="text-lg px-2">-</button>
-      <span>{isInCart.quantity}</span>
-      <button onClick={() => handleIncrease(shop._id, item._id)} className="text-lg px-2">+</button>
-    </div>
-  ) : (
-    <button
-      className="mt-2 w-full bg-blue-500 dark:bg-blue-600 text-white py-1 rounded-md hover:bg-blue-600 dark:hover:bg-blue-700"
-      onClick={() => handleCartAction(item)}
+  return (
+    <div 
+      key={item._id} 
+      className={`bg-gradient-to-br ${isOutOfStock && "opacity-50 bg-transparent"} from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 
+                 text-paragraph-dark dark:text-paragraph-light p-3 rounded-md shadow-md relative`}
     >
-      Add to Cart
-    </button>
-  )}
-</div>
+      
+      <img 
+        src={item.image} 
+        alt={item.name} 
+        className="w-full h-20 md:h-40 border-2 border-background-dark dark:border-black object-cover rounded-md" 
+      />
+      <h4 className="text-sm md:text-lg font-bold mt-2 text-heading-light dark:text-heading-dark">
+        {item.name}
+      </h4>
+      
+      <div className="flex items-center gap-2">
+        <p className="text-green-500 dark:text-green-400 font-semibold text-sm md:text-lg">
+          ₹{item.offerPrice}
+        </p>
+        {item.discount > 0 && (
+          <p className="text-gray-500 dark:text-red-400 line-through text-sm">
+            ₹{item.salesPrice}
+          </p>
+        )}
+      </div>
 
-          );
-        })}
+      {/* Wishlist Button */}
+      <button
+        className={`absolute top-2 right-2 p-2 rounded-full ${
+          isWishlisted ? "text-red-500" : "text-paragraph-dark dark:text-paragraph-light"
+        } hover:text-red-500`}
+        onClick={() => handleWishlistToggle(item)}
+      >
+        <Heart fill={`${isWishlisted ? "red" : "white"}`} />
+      </button>
+
+      {isOutOfStock ? (
+        <button
+          className="mt-2 w-full bg-red-500 text-white py-1 rounded-md cursor-not-allowed "
+          disabled
+        >
+          Out of Stock
+        </button>
+      ) : isInCart ? (
+        <div className="flex items-center justify-between mt-2 bg-blue-500 dark:bg-blue-600 text-white py-1 px-3 rounded-md">
+          <button onClick={() => handleDecrease(shop._id, item._id)} className="text-lg px-2">-</button>
+          <span>{isInCart.quantity}</span>
+          <button onClick={() => handleIncrease(shop._id, item._id)} className="text-lg px-2">+</button>
+        </div>
+      ) : (
+        <button
+          className="mt-2 w-full bg-blue-500 dark:bg-blue-600 text-white py-1 rounded-md hover:bg-blue-600 dark:hover:bg-blue-700"
+          onClick={() => handleCartAction(item)}
+        >
+          Add to Cart
+        </button>
+      )}
+    </div>
+  );
+})}
       </div>
     </div>
   );
