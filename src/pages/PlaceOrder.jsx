@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { clearCart } from "../redux/cartSlice";
 import toast from "react-hot-toast";
 import useAPI from "../hooks/useAPI"; // Import the custom API hook
+import { buyProducts } from "../services/paymentIntegration";
 
 const PlaceOrder = () => {
   const dispatch = useDispatch();
@@ -28,46 +29,59 @@ const PlaceOrder = () => {
     return `${address.street}, ${address.city}, ${address.state}, ${address.country}, ${address.postalCode}`;
   };
 
-  const formatProducts = (shopData) => {
-    console.log(shopData)
+ 
+const formatProducts = (shopData) => {
+    console.log(shopData);
     if (!shopData || typeof shopData !== "object") return [];
-  
-    return Object.values(shopData.items).map((item) => ({
-        productId: item._id,
-        name: item.name,
-      category: item.category,
-      quantity: item.quantity,
-      price: item.offerPrice,
-    }));
-  };
+
+    const formattedProducts = Object.values(shopData.items).map((item) => {
+         return {
+            productId: item._id,
+            name: item.name,
+            category: item.category,
+            quantity: item.quantity,
+            price: item.offerPrice,
+        };
+    });
+
+    return formattedProducts;
+};
   
 
   const handleOrderPlacement = async () => {
     if (!selectedAddress) return toast.error("Please select an address.");
     if (!paymentMethod) return toast.error("Please select a payment method.");
+    const products = formatProducts(shopData);
+    const totalAmount = products.reduce((sum, item) => sum + item.price * item.quantity, 0); // Ensure correct total
 
     const orderData = {
+      name:customer.name,
       customerId: customer._id,
       shopId,
-      products: formatProducts(shopData),
+      products,
       paymentMethod,
       deliveryAddress: formatAddress(selectedAddress),
     };
-    console.log(orderData)
-    const response = await callApi({
-      url: "api/order/",
-      method: "POST",
-      data: orderData,
-    });
 
-    if (response) {
-      toast.success("🎉 Order Placed Successfully!");
-      dispatch(clearCart(shopId));
-      setTimeout(() => {
-        navigate("/dashboard/orders");
-      }, 1500);
+    console.log("Before UPI payment");
+
+    if (paymentMethod !== "COD") {
+        await buyProducts(totalAmount, navigate, dispatch, callApi, orderData);
     } else {
-      toast.error("Failed to place order. Try again.");
+        console.log("Placing order for COD");
+        const response = await callApi({
+            url: "api/order/",
+            method: "POST",
+            data: orderData,
+        });
+
+        if (response) {
+            toast.success("🎉 Order Placed Successfully!");
+            dispatch(clearCart(shopId));
+            setTimeout(() => navigate("/dashboard/orders"), 1500);
+        } else {
+            toast.error("Failed to place order. Try again.");
+        }
     }
   };
 

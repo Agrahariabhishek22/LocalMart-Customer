@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { addNotification } from "../redux/NotificationSlice";
 
 
-
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {

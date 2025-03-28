@@ -19,7 +19,7 @@ const {callApi,loading,error} = useAPI();
   const shop = useSelector((state) => {
     return Object.values(state.shops.shopsByCategory).flat().find((shop) => shop._id === shopId);
   });
- console.log(shop)
+//  console.log(shop)
 
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
   // console.log(productsByCategory);
@@ -32,7 +32,7 @@ const {callApi,loading,error} = useAPI();
     const fetchAllProducts = async () => {
 
       const response = await callApi({ url: `api/products/${shopId}` });
-      console.log(response)
+      // console.log(response)
       if (response?.success) {
         dispatch(fetchProductsSuccess({ shopId, products: response.data }));
       }

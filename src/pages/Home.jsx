@@ -20,6 +20,47 @@ export default function Home() {
     { question: "How can I track my order?", answer: "You can track your order through the 'My Orders' section in your account." }
   ];
 
+  const { callApi,loading,error } = useAPI();
+  const {  selectedCategory } = useSelector((state) => state.shops);
+const [sidebarOpen,setSidebarOpen] = useState(false);
+  
+  useEffect(() => {
+    const fetchShops = async () => {
+      if (!navigator.geolocation) {
+        console.error("Geolocation is not supported by this browser.");
+        return;
+      }
+  
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+
+          // console.log(position.coords)
+          const response = await callApi({ 
+            url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
+            method: "GET" 
+          });
+  
+          // console.log(response);
+          
+          if (response) {
+            dispatch(fetchShopsSuccess(response?.data));
+            dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
+          }
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    };
+  
+    fetchShops();
+  }, []);
+  
+if(loading){
+  return <CardSkeleton/>
+}
+
   return (
     <div className="min-h-screen text-white dark:bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-800 dark:via-gray-900 dark:to-black">
       {/* Hero Section */}

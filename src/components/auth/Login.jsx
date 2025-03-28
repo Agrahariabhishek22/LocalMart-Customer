@@ -4,9 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { loginSuccess, setError } from "../../redux/customerSlice";
 import useAPI from "../../hooks/useAPI";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState({ identifier: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    identifier: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,7 +18,10 @@ const LoginForm = () => {
 
   const validate = () => {
     let newErrors = {};
-    if (!credentials.identifier.match(/^\S+@\S+\.\S+$/) && !credentials.identifier.match(/^\d{10}$/)) {
+    if (
+      !credentials.identifier.match(/^\S+@\S+\.\S+$/) &&
+      !credentials.identifier.match(/^\d{10}$/)
+    ) {
       newErrors.identifier = "Enter a valid email or 10-digit mobile number";
     }
     if (credentials.password.length < 8) {
@@ -31,7 +38,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -44,12 +51,12 @@ const LoginForm = () => {
           const result = await callApi({
             url: "api/customer/login",
             method: "POST",
-            data: { ...credentials, location }, 
+            data: { ...credentials, location },
             headers: { "Content-Type": "application/json" },
           });
-          
+
           if (result?.success) {
-            console.log("result",result)
+            // console.log("result",result)
             dispatch(loginSuccess(result.customer));
             toast.success("Logged in successfully!");
             navigate("/");
@@ -74,10 +81,14 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-300 dark:border-gray-700">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Login</h2>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
+          Login
+        </h2>
         <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">Email or Mobile Number</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+              Email or Mobile Number
+            </label>
             <input
               type="text"
               name="identifier"
@@ -86,10 +97,14 @@ const LoginForm = () => {
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.identifier && <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>}
+            {errors.identifier && (
+              <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>
+            )}
           </div>
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">Password</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -98,7 +113,9 @@ const LoginForm = () => {
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
           <button
             type="submit"
@@ -112,12 +129,24 @@ const LoginForm = () => {
             )}
           </button>
         </form>
-        <p className="text-center text-gray-700 dark:text-gray-300 mt-4">
-          Don't have an account?{" "}
-          <a href="/signup" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
-            Sign Up
-          </a>
-        </p>
+        <div className="flex flex-col items-center mt-4">
+          <Link
+            to="/forgot-password"
+            className="self-end text-sm text-blue-500 dark:text-blue-400 hover:underline"
+          >
+            Forgot Password?
+          </Link>
+
+          <p className="text-center text-gray-700 dark:text-gray-300 mt-3">
+            Don't have an account?{" "}
+            <a
+              href="/signup"
+              className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+            >
+              Sign Up
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -17,8 +17,14 @@ import PlaceOrder from "./pages/PlaceOrder";
 import TestComponent from "./utils/TestComponent";
 import Orders from "./pages/Orders";
 import Wishlist from "./pages/Wishlist";
+
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+
+import ForgotPassword from "./components/auth/ForgotPassword";
+import UpdatePassword from "./components/auth/UpdatePassword";
+
+
 // import Payments from "./pages/Payments";
 // import Coupons from "./pages/Coupons";
 // import Returns from "./pages/Returns";
@@ -57,6 +63,14 @@ const router = createBrowserRouter([
           // { path: "support", element: <Support /> },
           // { path: "settings", element: <Settings /> },
         ],
+      },
+      {
+        path:"/forgot-password",
+        element:<ForgotPassword/>
+      },
+      {
+        path:"/update-password/:id",
+        element:<UpdatePassword/>
       },
       {
         path: "/cart",

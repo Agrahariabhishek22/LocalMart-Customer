@@ -4,6 +4,7 @@ import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from ".
 import { useNavigate } from "react-router-dom";
 import { Plus, Minus, Trash } from "lucide-react";
 import toast from "react-hot-toast";
+
 import EmptyState from "./EmptyState";
 
 const Cart = () => {
