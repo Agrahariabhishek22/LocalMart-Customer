@@ -9,9 +9,8 @@ export const SocketContext = createContext();
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
-  const {_id} = useSelector((state)=>state?.customer?.customer||null);
+  const id = useSelector((state)=>state?.customer?.customer?._id||"");
   useEffect(() => {
-   const id = _id;
     if (!id) return;
     
     //const newSocket = io("http://localhost:3000", { withCredentials: true });
