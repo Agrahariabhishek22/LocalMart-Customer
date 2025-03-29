@@ -9,7 +9,7 @@ const useAPI = () => {
         setLoading(true);
         setError(null);
        
-        url = `http://localhost:3000/${url}`
+        url = `https://shopsy-backend-gilt.vercel.app/${url}`
         console.log(url)
         try {
             const response = await axios({
