@@ -1,14 +1,14 @@
 
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaEnvelope, FaPhone, FaArrowCircleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { setSelectedCategory } from "../redux/shopsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import heroImage from "../assets/img6.jpg";
 import categoriesImage from "../assets/img5.avif";
-import reviewsImage from "../assets/img2.jpeg";
-import faqImage from "../assets/img1.webp";
+
+import useAPI from "../hooks/useAPI";
 
 export default function Home() {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -21,41 +21,40 @@ export default function Home() {
   ];
 
   const { callApi,loading,error } = useAPI();
-  const {  selectedCategory } = useSelector((state) => state.shops);
-const [sidebarOpen,setSidebarOpen] = useState(false);
-  
-  useEffect(() => {
-    const fetchShops = async () => {
-      if (!navigator.geolocation) {
-        console.error("Geolocation is not supported by this browser.");
-        return;
-      }
-  
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
 
-          // console.log(position.coords)
-          const response = await callApi({ 
-            url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
-            method: "GET" 
-          });
   
-          // console.log(response);
+  // useEffect(() => {
+  //   const fetchShops = async () => {
+  //     if (!navigator.geolocation) {
+  //       console.error("Geolocation is not supported by this browser.");
+  //       return;
+  //     }
+  
+  //     navigator.geolocation.getCurrentPosition(
+  //       async (position) => {
+  //         const { latitude, longitude } = position.coords;
+
+  //         // console.log(position.coords)
+  //         const response = await callApi({ 
+  //           url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
+  //           method: "GET" 
+  //         });
+  
+  //         // console.log(response);
           
-          if (response) {
-            dispatch(fetchShopsSuccess(response?.data));
-            dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
-          }
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    };
+  //         if (response) {
+  //           dispatch(fetchShopsSuccess(response?.data));
+  //           dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error("Error getting location:", error);
+  //       }
+  //     );
+  //   };
   
-    fetchShops();
-  }, []);
+  //   fetchShops();
+  // }, []);
   
 if(loading){
   return <CardSkeleton/>
