@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { Plus, Minus, Trash } from "lucide-react";
-import toast from "react-hot-toast";
+
 
 import EmptyState from "./EmptyState";
 

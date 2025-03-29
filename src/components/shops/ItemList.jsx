@@ -54,7 +54,7 @@ const [search,setSearch] = useState("");
     }
   }
   const handleChange = debounce((value)=>{
-    console.log(value)
+   // console.log(value)
     setSearch(value)
   },800)
 
