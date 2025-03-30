@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import useAPI from "../hooks/useAPI";
 import OrderCard from "../components/common/OrderCard";
 import EmptyState from "./EmptyState";
+import CardSkeleton from "../components/common/CardSkeleton";
 
 const Orders = () => {
   const { callApi, loading, error } = useAPI();
@@ -11,6 +12,14 @@ const Orders = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const groupOrdersByShop = (orders) => {
+    return orders.reduce((acc, order) => {
+      const shopName = order.shopId.shopName;
+      if (!acc[shopName]) acc[shopName] = [];
+      acc[shopName].push(order);
+      return acc;
+    }, {});
+  };
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await callApi({ url: "api/order/customer" });
@@ -25,16 +34,10 @@ const Orders = () => {
     };
     fetchOrders();
   }, []);
-
-  const groupOrdersByShop = (orders) => {
-    return orders.reduce((acc, order) => {
-      const shopName = order.shopId.shopName;
-      if (!acc[shopName]) acc[shopName] = [];
-      acc[shopName].push(order);
-      return acc;
-    }, {});
-  };
-
+  if(loading){
+    return <div className="flex justify-center items-center dark:bg-gray-900"><CardSkeleton/></div>
+  }
+  
   const filteredOrders = selectedShop
     ? orders[selectedShop].filter((order) =>
         selectedStatus === "All" ? true : order.status === selectedStatus
@@ -42,7 +45,8 @@ const Orders = () => {
     : [];
 
   return (
-    <div className="relative flex min-h-screen p-5 dark:bg-gray-900">
+
+    <div className=" flex min-h-screen p-5 dark:bg-gray-900">
       {/* Sidebar Toggle Button */}
       <button
         className="z-50 fixed left-0 md:hidden top-1/2 transform -translate-x-11 rotate-90 

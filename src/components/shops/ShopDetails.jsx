@@ -7,41 +7,32 @@ import { LucideMenu, LucideX, LucideMapPin, LucidePhone, LucideUser } from "luci
 import ItemCategorySidebar from "./ItemCategorySidebar";
 import ItemList from "./ItemList";
 import useAPI from "../../hooks/useAPI";
+import CardSkeleton from "../common/CardSkeleton";
+import EmptyState from "../../pages/EmptyState";
 
 const ShopDetails = () => {
   const { shopId } = useParams();
   const dispatch = useDispatch();
-  
+  // console.log(shopId)
+  // console.log(typeof shopId)
   const [sidebarOpen, setSidebarOpen] = useState(false);
-const {callApi,loading,error} = useAPI();
+
 
   // Get shop details from Redux store
   const shop = useSelector((state) => {
     return Object.values(state.shops.shopsByCategory).flat().find((shop) => shop._id === shopId);
   });
-//  console.log(shop)
+  // console.log(shop)
 
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
-  // console.log(productsByCategory);
+  //  console.log(productsByCategory);
   
   const [selectedCategory, setSelectedCategory] = useState("All");
-//console.log( Object.keys(productsByCategory)[0])
-  useEffect(() => {
-    //if (!shopId ) return;
-    // console.log("use effect called")
-    const fetchAllProducts = async () => {
 
-      const response = await callApi({ url: `api/products/${shopId}` });
-      // console.log(response)
-      if (response?.success) {
-        dispatch(fetchProductsSuccess({ shopId, products: response.data }));
-      }
-    };
-
-    fetchAllProducts();
-  }, []);
-
-  if (!shop) return <p className="text-center text-gray-500">Shop not found</p>;
+// console.log((productsByCategory[shopId]))
+ if(!productsByCategory[shopId]){
+  return <EmptyState/>
+ }
 
   return (
     <div className="flex pl-4 min-h-screen bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-700
@@ -93,7 +84,7 @@ const {callApi,loading,error} = useAPI();
           </div>
         </div>
         {/* Items List */}
-        <ItemList items={productsByCategory[selectedCategory] || []} category={selectedCategory} shop={shop} />
+        <ItemList items={productsByCategory[shopId][selectedCategory] || []} category={selectedCategory} shop={shop} />
       </div>
     </div>
   );

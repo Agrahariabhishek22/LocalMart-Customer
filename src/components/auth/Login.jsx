@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { loginSuccess, setError } from "../../redux/customerSlice";
 import useAPI from "../../hooks/useAPI";
 import { Link } from "react-router-dom";
@@ -64,8 +64,11 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-300 dark:border-gray-700">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Login</h2>
-        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
+          Login
+        </h2>
+        <form className="mt-6 space-y-6" >
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-1">Email or Mobile Number</label>
             <input
@@ -91,7 +94,7 @@ const LoginForm = () => {
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="w-full flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition disabled:bg-gray-400"
             disabled={loading}
           >

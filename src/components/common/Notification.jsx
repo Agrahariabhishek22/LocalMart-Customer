@@ -8,21 +8,24 @@ const NotificationBell = () => {
   const dispatch = useDispatch();
   const notifications = useSelector((state) => state.notification.notifications);
   const [isOpen, setIsOpen] = useState(false);
-const {callApi} = useAPI();
+const {callApi,loading} = useAPI();
+console.log("Notification")
   useEffect(() => {
     const fetchNotifications = async () => {
-      const data = await callApi({ 
-        url: "api/notifications/customer" ,
+      const data = await callApi({
+        url: "api/notifications/customer",
         method: "GET",
         headers: { "Content-Type": "application/json" },
-    });
+       
+      });
+    console.log(data)
       if (data) {
         dispatch(setNotifications(data)); // Store notifications in Redux
       }
     };
 
     fetchNotifications();
-  }, [dispatch]);
+  }, []);
   
   const handleMarkAsRead = async () => {
     const response = await callApi({
@@ -62,7 +65,7 @@ const {callApi} = useAPI();
 
       {/* Notification Dropdown */}
       {isOpen && (
-        <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 md:w-72 bg-background-light dark:bg-background-dark shadow-lg rounded-lg p-3 border-2 dark:border-black dark:border-white">
+        <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 md:w-72 bg-background-light dark:bg-background-dark shadow-lg rounded-lg p-3 border-2  dark:border-white">
           <h4 className="text-gray-800 dark:text-gray-200 font-semibold text-center">Notifications</h4>
 
           <ul className="mt-2 max-h-60 overflow-y-auto">

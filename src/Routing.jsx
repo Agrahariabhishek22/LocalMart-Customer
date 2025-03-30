@@ -43,6 +43,10 @@ const router = createBrowserRouter([
       { path: "/signup", element: <Signup /> },
       { path: "/cart", element: <Cart /> },
       { path: "/profile", element: <Profile /> },
+      {
+        path: "/orders",
+        element:<Orders />,
+       },
       { path: "/shop/:shopId", element: <ShopDetails /> },
       {
         path: "/dashboard",
@@ -53,9 +57,9 @@ const router = createBrowserRouter([
           { index: true, element: <Navigate to="update-profile" replace /> }, // ✅ Relative Path
 { path: "update-profile", element: <UpdateProfile /> },
 
-          { path: "orders", element: <Orders /> },
+          // { path: "orders", element: <Orders /> },
           { path: "update-address", element: <UpdateAddress /> },
-          // { path: "wishlist", element: <Wishlist /> },
+         // { path: "logout", element: <Logout /> },
 
           // { path: "payments", element: <Payments /> },
           // { path: "coupons", element: <Coupons /> },
@@ -76,10 +80,7 @@ const router = createBrowserRouter([
         path: "/cart",
         element:<PrivateRoute><Cart /></PrivateRoute>,
        },
-      {
-        path: "/orders",
-        element:<Orders />,
-       },
+      
       {
         path:'/wishlist',
         element:<Wishlist/>,

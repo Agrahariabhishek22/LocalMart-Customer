@@ -11,10 +11,11 @@ export const SocketProvider = ({ children }) => {
   const dispatch = useDispatch();
   const id = useSelector((state)=>state?.customer?.customer?._id||"");
   useEffect(() => {
-    if (!id) return;
-    
-    //const newSocket = io("http://localhost:3000", { withCredentials: true });
-    const newSocket = io("https://shopsy-backend-gilt.vercel.app", { withCredentials: true });
+
+    if(!id)return;
+    console.log("shopkeeper context called")
+    const newSocket = io("http://localhost:3000", { withCredentials: true });
+    //const newSocket = io("https://shopsy-backend-one.vercel.app", { withCredentials: true });
     newSocket.emit("joinCustomer",id);
 
     newSocket.on("OrderStatusUpdated", (data) => {
@@ -25,13 +26,16 @@ export const SocketProvider = ({ children }) => {
         message: data.message, 
       }));
     });
-
+  newSocket.on("Logged-Out",()=>{
+    console.log("logout socket")
+    newSocket.emit("disconnect",id)
+  })
     setSocket(newSocket);
 
     return () => {
       newSocket.disconnect();
     };
-  }, [dispatch]);
+  }, [dispatch,id]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
