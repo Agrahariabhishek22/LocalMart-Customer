@@ -27,6 +27,7 @@ const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
     
   ];
   const location = useLocation();
+  const dispatch = useDispatch()
   const currentPath = location.pathname;
   return (
     <aside className="bg-background-light dark:bg-background-dark ">

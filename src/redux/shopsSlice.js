@@ -42,17 +42,23 @@ const shopsSlice = createSlice({
     },
    
     fetchProductsSuccess: (state, action) => {
-       const {  products } = action.payload;
-      const categorizedProducts = {"All":[]};
- 
+       const   products  = action.payload;
+      const categorizedProducts = {};
+
+      
       products.forEach((product) => {
         const category = product.category.trim();
-        if (!categorizedProducts[category]) {
-          categorizedProducts[category] = [];
+        const shopId = product.shopId.toString()
+        if (!categorizedProducts[shopId]) {
+          categorizedProducts[shopId] = {"All":[]};
           
         }
-        categorizedProducts[category].push(product);
-        categorizedProducts["All"].push(product);
+        if (!categorizedProducts[shopId][category]) {
+          categorizedProducts[shopId][category] = [];
+          
+        }
+        categorizedProducts[shopId][category].push(product);
+        categorizedProducts[shopId]["All"].push(product);
       });
 
       state.productsByShop = categorizedProducts;
