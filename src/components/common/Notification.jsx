@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setNotifications,markAllAsRead } from "../../redux/NotificationSlice";
+import { setNotifications,markAllAsRead } from "../../redux/notificationSlice";
 import { Bell, Info, CheckCircle, AlertTriangle } from "lucide-react";
 import useAPI from "../../hooks/useAPI";
 
