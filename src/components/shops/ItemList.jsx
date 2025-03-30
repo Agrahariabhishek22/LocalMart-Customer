@@ -37,8 +37,8 @@ const [search,setSearch] = useState("");
       dispatch(addToWishlist({ id: item._id, shopId: shop._id, shopName: shop.shopName, ...item }));
     }
   };
-  if(Object.keys(items).length === 0)return <h1 className="py-6 text-lg text-center"><EmptyState/></h1>
-  console.log(items)
+  if((Object.keys(items)).length === 0)return <div className="py-6 text-lg text-center"><EmptyState/></div>
+  //console.log(items)
  if(search !== ""){
   items = items.filter((item)=>(
     item.name.toLowerCase().includes(search.toLowerCase().trim())

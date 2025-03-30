@@ -18,7 +18,7 @@ const Shops = () => {
   const {  selectedCategory } = useSelector((state) => state.shops);
 const [sidebarOpen,setSidebarOpen] = useState(false);
   const shops = useSelector((state)=>state.shops.shopsByCategory)
-  console.log(Object.keys(shops))
+  //console.log(Object.keys(shops))
   useEffect(() => {
     const fetchShops = async () => {
 
@@ -28,7 +28,7 @@ const [sidebarOpen,setSidebarOpen] = useState(false);
         method: "GET" 
       });
 
-      console.log(response);
+     // console.log(response);
       
       if (response) {
         dispatch(fetchShopsSuccess(response?.data||[]));
@@ -39,7 +39,7 @@ const [sidebarOpen,setSidebarOpen] = useState(false);
       
     };
   
-    if(Object.keys(shops).length === 0){
+    if((Object.keys(shops)).length === 0){
       console.log(shops)
       fetchShops();
     }

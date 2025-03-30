@@ -7,8 +7,8 @@ const ShopList = () => {
     const { shopsByCategory, selectedCategory } = useSelector((state) => state.shops);
     const [search,setSearch] = useState("");
     const navigate = useNavigate();
-    console.log(shopsByCategory)
-    console.log(selectedCategory)
+    // console.log(shopsByCategory)
+    // console.log(selectedCategory)
     // Ensure shopsByCategory exists before accessing
     let shops;
     if(search !== ""){

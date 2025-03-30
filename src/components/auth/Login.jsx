@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { loginSuccess, setError } from "../../redux/customerSlice";
 import useAPI from "../../hooks/useAPI";
 import { Link } from "react-router-dom";
@@ -39,42 +39,22 @@ const LoginForm = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
+    const result = await callApi({
+      url: "api/customer/login",
+      method: "POST",
+      data: { ...credentials, location },
+      headers: { "Content-Type": "application/json" },
+    });
 
-          // console.log(location.latitude)
-          const result = await callApi({
-            url: "api/customer/login",
-            method: "POST",
-            data: { ...credentials, location },
-            headers: { "Content-Type": "application/json" },
-          });
-
-          if (result?.success) {
-            // console.log("result",result)
-            dispatch(loginSuccess(result.customer));
-            toast.success("Logged in successfully!");
-            navigate("/");
-            setCredentials({ identifier: "", password: "" });
-          } else {
-            dispatch(setError(result?.message));
-            toast.error(result?.message);
-          }
-        },
-        (error) => {
-          console.error("Error fetching location:", error);
-          dispatch(setError("Failed to get location. Please enable GPS."));
-          toast.error("Failed to get location. Please enable GPS.");
-        }
-      );
+    if (result?.success) {
+      // console.log("result",result)
+      dispatch(loginSuccess(result.customer));
+      toast.success("Logged in successfully!");
+      navigate("/");
+      setCredentials({ identifier: "", password: "" });
     } else {
-      dispatch(setError("Geolocation is not supported in this browser."));
-      toast.error("Geolocation is not supported in this browser.");
+      dispatch(setError(result?.message));
+      toast.error(result?.message);
     }
   };
 
@@ -84,7 +64,7 @@ const LoginForm = () => {
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
           Login
         </h2>
-        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-6 space-y-6" >
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-1">
               Email or Mobile Number
@@ -118,7 +98,7 @@ const LoginForm = () => {
             )}
           </div>
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="w-full flex items-center justify-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md transition disabled:bg-gray-400"
             disabled={loading}
           >

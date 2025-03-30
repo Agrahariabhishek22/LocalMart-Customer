@@ -8,21 +8,24 @@ const NotificationBell = () => {
   const dispatch = useDispatch();
   const notifications = useSelector((state) => state.notification.notifications);
   const [isOpen, setIsOpen] = useState(false);
-const {callApi} = useAPI();
+const {callApi,loading} = useAPI();
+console.log("Notification")
   useEffect(() => {
     const fetchNotifications = async () => {
-      const data = await callApi({ 
-        url: "api/notifications/customer" ,
+      const data = await callApi({
+        url: "api/notifications/customer",
         method: "GET",
         headers: { "Content-Type": "application/json" },
-    });
+       
+      });
+    console.log(data)
       if (data) {
         dispatch(setNotifications(data)); // Store notifications in Redux
       }
     };
 
     fetchNotifications();
-  }, [dispatch]);
+  }, []);
   
   const handleMarkAsRead = async () => {
     const response = await callApi({
