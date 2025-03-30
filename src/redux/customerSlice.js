@@ -26,7 +26,7 @@ const customerSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
-      localStorage.removeItem("customer"); // Clear session
+      localStorage.removeItem("customer"); 
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
