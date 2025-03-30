@@ -9,10 +9,11 @@ import { SocketProvider } from './context/SocketContext'
 createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
+
  <SocketProvider>
  <Routing />
  </SocketProvider>
-          
+
       
      </Provider>
 )

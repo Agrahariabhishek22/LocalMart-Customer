@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { Plus, Minus, Trash } from "lucide-react";
-import toast from "react-hot-toast";
- 
+
+
+import EmptyState from "./EmptyState";
+
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,12 +20,12 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold text-heading-dark dark:text-heading-light mb-4">
+      <h2 className="text-2xl font-bold font-heading text-center text-heading-dark dark:text-heading-light mb-4">
         Your Cart
       </h2>
 
       {Object.keys(cart).length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">Your cart is empty.</p>
+        <EmptyState message="Cart is Empty"/>
       ) : (
         Object.entries(cart).map(([shopId, shopData]) => {
           const shopTotal = Object.values(shopData.items).reduce(

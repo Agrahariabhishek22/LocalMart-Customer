@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
     const user = useSelector((state) => state.customer.customer);
     console.log("User in PrivateRoute:", user); // ✅ Check user data
   
-    return user ? children : <Navigate to="/login" replace />;
+    return user ? children : <Navigate to="/" replace />;
   };
   
   

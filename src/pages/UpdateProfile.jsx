@@ -56,7 +56,7 @@ console.log("customer ",customer)
     <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 shadow-xl rounded-xl p-8 border border-gray-300 dark:border-gray-700">
       <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-200 mb-6 text-center">Edit Profile</h2>
       <div className="flex flex-col items-center gap-6">
-        <div className="relative w-28 h-28">
+        <div className=" relative w-28 h-28">
           <img
             src={formData.avatar || "https://via.placeholder.com/100"}
             alt="Avatar"

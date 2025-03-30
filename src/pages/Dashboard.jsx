@@ -20,14 +20,13 @@ import {
 const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
   const menuItems = [
     { name: "Update Profile", icon: <User size={20} />, path: "/dashboard/update-profile" },
-    { name: "Orders", icon: <ShoppingBag size={20} />, path: "/dashboard/orders" },
+    
     { name: "Update Address", icon: <MapPin size={20} />, path: "/dashboard/update-address" },
-    { name: "Wishlist", icon: <Heart size={20} />, path: "/dashboard/wishlist" },
+   
     { name: "Payments", icon: <CreditCard size={20} />, path: "/dashboard/payments" },
-    { name: "Coupons", icon: <Gift size={20} />, path: "/dashboard/coupons" },
-    { name: "Returns", icon: <RotateCcw size={20} />, path: "/dashboard/returns" },
-    { name: "Support", icon: <MessageSquare size={20} />, path: "/dashboard/support" },
+    
   ];
+  const dispatch=useDispatch();
   const location = useLocation();
   const currentPath = location.pathname;
   return (
@@ -96,11 +95,11 @@ const Dashboard = () => {
 
       {/* Side bar button */}
       <button
-  className="z-100 fixed bottom-0 md:hidden left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-t-lg shadow-lg"
-  onClick={() => setSidebarOpen(!sidebarOpen)}
->
-  {sidebarOpen ? "Close Sidebar" : "Open Sidebar"}
-</button>
+        className="z-100 fixed left-0 md:hidden  top-1/2  transform  -translate-x-14 rotate-90 bg-gradient-to-r from-blue-500 to-purple-500  text-white px-4 py-2 rounded-t-lg shadow-lg"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? "Close Dashboard" : "Open Dashboard"}
+      </button>
 
       <main className="flex-1 p-8 bg-gradient-to-b from-background-light to-gray-200 dark:from-background-dark dark:to-gray-900 min-h-screen shadow-lg rounded-lg">
         <Outlet /> {/* ✅ This ensures nested routes render here */}

@@ -39,40 +39,21 @@ const LoginForm = () => {
     e.preventDefault();
     if (!validate()) return;
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const location = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
+    const result = await callApi({
+      url: "api/customer/login",
+      method: "POST",
+      data: { ...credentials, location },
+      headers: { "Content-Type": "application/json" },
+    });
 
-          const result = await callApi({
-            url: "api/customer/login",
-            method: "POST",
-            data: { ...credentials, location },
-            headers: { "Content-Type": "application/json" },
-          });
-
-          if (result?.success) {
-            dispatch(loginSuccess(result.customer));
-            toast.success("Logged in successfully!");
-            navigate("/");
-            setCredentials({ identifier: "", password: "" });
-          } else {
-            dispatch(setError(result?.message));
-            toast.error(result?.message);
-          }
-        },
-        (error) => {
-          console.error("Error fetching location:", error);
-          dispatch(setError("Failed to get location. Please enable GPS."));
-          toast.error("Failed to get location. Please enable GPS.");
-        }
-      );
+    if (result?.success) {
+      dispatch(loginSuccess(result.customer));
+      toast.success("Logged in successfully!");
+      navigate("/");
+      setCredentials({ identifier: "", password: "" });
     } else {
-      dispatch(setError("Geolocation is not supported in this browser."));
-      toast.error("Geolocation is not supported in this browser.");
+      dispatch(setError(result?.message));
+      toast.error(result?.message);
     }
   };
 
@@ -121,7 +102,7 @@ const LoginForm = () => {
             )}
           </button>
         </form>
-        <div className="flex flex-col items-center mt-4 space-y-3">
+        {/* <div className="flex flex-col items-center mt-4 space-y-3">
           <button
             onClick={() => handleOAuthLogin("google")}
             className="w-full flex items-center justify-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition"
@@ -134,7 +115,7 @@ const LoginForm = () => {
           >
             Login with GitHub
           </button>
-        </div>
+        </div> */}
         <div className="flex flex-col items-center mt-4">
           <Link to="/forgot-password" className="self-end text-sm text-blue-500 dark:text-blue-400 hover:underline">
             Forgot Password?

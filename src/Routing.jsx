@@ -1,13 +1,14 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import App from "./App";
+import Shops from "./pages/Shops";
 import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Error from "./pages/Error";
 import Dashboard from "./pages/Dashboard";
 import UpdateProfile from "./pages/UpdateProfile";
-import ShopDetails from "./components/home/ShopDetails";
+import ShopDetails from "./components/shops/ShopDetails";
 import Profile from "./pages/Profile";
 import UpdateAddress from "./pages/UpdateAddress";
 import Cart from "./pages/Cart";
@@ -16,8 +17,13 @@ import PlaceOrder from "./pages/PlaceOrder";
 import TestComponent from "./utils/TestComponent";
 import Orders from "./pages/Orders";
 import Wishlist from "./pages/Wishlist";
+
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+
 import ForgotPassword from "./components/auth/ForgotPassword";
 import UpdatePassword from "./components/auth/UpdatePassword";
+
 
 // import Payments from "./pages/Payments";
 // import Coupons from "./pages/Coupons";
@@ -32,6 +38,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/shops", element: <Shops /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
       { path: "/cart", element: <Cart /> },
@@ -39,7 +46,7 @@ const router = createBrowserRouter([
       { path: "/shop/:shopId", element: <ShopDetails /> },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard/></PrivateRoute>,
         errorElement: <Error />,
         children: [
 
@@ -80,6 +87,14 @@ const router = createBrowserRouter([
       {
         path: "/place-order",
         element: <PlaceOrder/>,
+       },
+       {
+        path:"/about",
+        element:<AboutUs/>
+       },
+       {
+        path:"/contact",
+        element:<ContactUs/>
        },
       {
         path: "/test",

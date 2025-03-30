@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bona+Nova+SC:wght@700&family=Fredericka+the+Great&family=Lacquer&family=Londrina+Sketch&family=Luxurious+Roman&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Rubik+Wet+Paint&display=swap');
+
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
     --color-background-light: #F9FAFB;
     --color-background-dark: #1F2937;
@@ -17,6 +18,8 @@
     --color-paragraph-light: #4B5563;
     --color-paragraph-dark: #9CA3AF;
 
-    --breakpoint-sml:300px
+    --breakpoint-sml:300px;
+    --font-heading:"Quantico";
+    --font-sub-heading:"Space Mono";
   }
   
