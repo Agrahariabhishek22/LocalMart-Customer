@@ -7,8 +7,8 @@ const ShopList = () => {
     const { shopsByCategory, selectedCategory } = useSelector((state) => state.shops);
     const [search,setSearch] = useState("");
     const navigate = useNavigate();
-    console.log(shopsByCategory)
-    console.log(selectedCategory)
+    // console.log(shopsByCategory)
+    // console.log(selectedCategory)
     // Ensure shopsByCategory exists before accessing
     let shops;
     if(search !== ""){
@@ -63,7 +63,7 @@ shops = shopsByCategory[selectedCategory].filter((shop)=>(
   {shops.map((shop) => (
   <div
   key={shop._id}
-  onClick={() => handleShopClick(shop._id)}
+  
   className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 
              p-2 md:p-3 rounded-xl shadow-lg transition-all duration-300 
              hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col items-center gap-y-2"
@@ -89,7 +89,7 @@ shops = shopsByCategory[selectedCategory].filter((shop)=>(
   {/* Centered Visit Button */}
   <p className="text-xs md:text-sm ">Timing : {shop.openingTime} - {shop.closingTime}</p>
   <h1 className={`px-2 py-1 text-sm md:text-lg rounded-lg ${shop.shopStatus == "OPEN" ? "bg-green-600" : "bg-red-500"}`}>{shop.shopStatus}</h1>
-  <button className="flex items-center justify-center w-full px-4 py-2 text-sm md:text-base font-semibold 
+  <button onClick={() => handleShopClick(shop._id)} className="flex items-center justify-center w-full px-4 py-2 text-sm md:text-base font-semibold 
                       text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 
                       dark:from-blue-600 dark:to-purple-600 
                       hover:from-blue-600 hover:to-purple-700 transition-all duration-300">

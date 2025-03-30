@@ -6,6 +6,7 @@ import {
   fetchShopsStart,
   fetchShopsSuccess,
   fetchShopsFailure,
+  fetchProductsSuccess,
 } from "../redux/shopsSlice";
 import Sidebar from "../components/shops/Sidebar";
 import ShopList from "../components/shops/ShopList";
@@ -13,45 +14,35 @@ import { useSelector } from "react-redux";
 import CardSkeleton from "../components/common/CardSkeleton";
 const Shops = () => {
   const dispatch = useDispatch();
-const [loading,setLoading] = useState(false)
-  const { callApi,error } = useAPI();
+  const { callApi,loading,error } = useAPI();
   const {  selectedCategory } = useSelector((state) => state.shops);
 const [sidebarOpen,setSidebarOpen] = useState(false);
-  
+  const shops = useSelector((state)=>state.shops.shopsByCategory)
+  //console.log(Object.keys(shops))
   useEffect(() => {
     const fetchShops = async () => {
-      setLoading(true);
-      if (!navigator.geolocation) {
-        console.error("Geolocation is not supported by this browser.");
-        return;
-      }
-  
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
 
-          console.log(position.coords)
-          const response = await callApi({ 
-            url: `api/owner/getAllShops?latitude=${latitude}&longitude=${longitude}`, 
-            method: "GET" 
-          });
   
-          console.log(response);
-          
-          if (response) {
-            dispatch(fetchShopsSuccess(response?.data));
-            if(!selectedCategory)dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
-          }
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-       
-      );
-       setLoading(false)
+      const response = await callApi({ 
+        url: `api/owner/getAllShops`, 
+        method: "GET" 
+      });
+
+     // console.log(response);
+      
+      if (response) {
+        dispatch(fetchShopsSuccess(response?.data||[]));
+        dispatch(fetchProductsSuccess(response?.products||[]))
+        if(!selectedCategory)dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
+      }
+      
+      
     };
   
-    fetchShops();
+    if((Object.keys(shops)).length === 0){
+      console.log(shops)
+      fetchShops();
+    }
   }, []);
   
 if(loading){

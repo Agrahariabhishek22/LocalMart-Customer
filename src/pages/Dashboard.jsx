@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation ,useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../redux/customerSlice";
 import {
@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Settings,
 } from "lucide-react";
+import useAPI from "../hooks/useAPI";
 
 const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
   const menuItems = [
@@ -26,8 +27,26 @@ const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
     { name: "Payments", icon: <CreditCard size={20} />, path: "/dashboard/payments" },
     
   ];
+  const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch()
   const currentPath = location.pathname;
+const {callApi} = useAPI();
+   const logout = async () => {
+          console.log("logged out");
+         
+          dispatch(logoutSuccess());
+          navigate("/");
+  
+          // Call API for logout
+          const response = await callApi({
+              url: "api/customer/logout",
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+          });
+  console.log(response)
+          // console.log("Logout Response:", response);
+      };
   return (
     <aside className="bg-background-light dark:bg-background-dark ">
       <div >
@@ -56,7 +75,7 @@ const Sidebar = ({ toggleDarkMode, darkMode,setSidebarOpen }) => {
       })}
         </nav>
         <button
-          onClick={() => dispatch(logoutSuccess())}
+          onClick={logout}
           className="w-full flex items-center gap-4 p-4 mt-4 bg-red-500 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
         >
           <LogOut size={20} /> Logout

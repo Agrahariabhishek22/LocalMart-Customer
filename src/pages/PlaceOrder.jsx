@@ -10,7 +10,7 @@ const PlaceOrder = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { callApi } = useAPI(); // Use API hook
+  const { callApi,loading,error } = useAPI(); // Use API hook
 
   const cart = useSelector((state) => state.cart);
   const customer = useSelector((state) => state.customer.customer);
@@ -63,7 +63,7 @@ const formatProducts = (shopData) => {
       deliveryAddress: formatAddress(selectedAddress),
     };
 
-    console.log("Before UPI payment");
+    //console.log("Before UPI payment");
 
     if (paymentMethod !== "COD") {
         await buyProducts(totalAmount, navigate, dispatch, callApi, orderData);
@@ -78,7 +78,7 @@ const formatProducts = (shopData) => {
         if (response) {
             toast.success("🎉 Order Placed Successfully!");
             dispatch(clearCart(shopId));
-            setTimeout(() => navigate("/dashboard/orders"), 1500);
+            setTimeout(() => navigate("/orders"), 1500);
         } else {
             toast.error("Failed to place order. Try again.");
         }
@@ -86,8 +86,8 @@ const formatProducts = (shopData) => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold text-heading-dark dark:text-heading-light mb-4">
+    <div className="dark:bg-gray-600 p-4 h-[100vh] w-[100vw]">
+      <h2 className="text-2xl font-bold text-heading-light dark:text-heading-dark mb-4">
         Checkout
       </h2>
 
@@ -124,10 +124,10 @@ const formatProducts = (shopData) => {
         <h3 className="text-lg font-semibold text-white">Select Payment Method</h3>
 
         <div className="mt-3">
-          <label className="block cursor-pointer">
-            <input type="radio" name="payment" value="COD" onChange={() => setPaymentMethod("COD")} /> COD
+          <label className="block cursor-pointer text-black dark:text-white">
+            <input type="radio" name="payment" value="COD"  onChange={() => setPaymentMethod("COD")} /> COD
           </label>
-          <label className="block cursor-pointer mt-2">
+          <label className="block cursor-pointer mt-2  text-black dark:text-white">
             <input type="radio" name="payment" value="UPI" onChange={() => setPaymentMethod("UPI")} /> UPI
           </label>
         </div>
@@ -135,10 +135,13 @@ const formatProducts = (shopData) => {
 
       {/* Confirm Order Button */}
       <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-md mt-6 w-full"
+        className="bg-blue-500 text-center text-white px-4 py-2 rounded-md mt-6 w-full"
         onClick={handleOrderPlacement}
       >
-        Confirm Order
+        {loading ? (
+              <svg className="animate-spin h-5 w-5 mr-2 border-4 border-white border-t-transparent rounded-full" />
+            ):"Confirm Order" }
+        
       </button>
     </div>
   );

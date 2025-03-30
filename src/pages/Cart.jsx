@@ -19,7 +19,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className=" dark:bg-gray-600 p-4 h-[100vh] w-[100vw]">
       <h2 className="text-2xl font-bold font-heading text-center text-heading-dark dark:text-heading-light mb-4">
         Your Cart
       </h2>
@@ -27,14 +27,14 @@ const Cart = () => {
       {Object.keys(cart).length === 0 ? (
         <EmptyState message="Cart is Empty"/>
       ) : (
-        Object.entries(cart).map(([shopId, shopData]) => {
+        Object.entries(cart).map(([shopId, shopData],index) => {
           const shopTotal = Object.values(shopData.items).reduce(
             (total, item) => total + item.quantity * item.offerPrice,
             0
           );
 
           return (
-            <div key={shopId} className="bg-gray-800 dark:bg-gray-700 p-4 rounded-md mb-6">
+            <div key={index} className="bg-gray-800 dark:bg-gray-700 p-4 rounded-md mb-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-semibold text-white">{shopData.shopName}</h3>
                 <button
