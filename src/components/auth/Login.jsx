@@ -47,7 +47,6 @@ const LoginForm = () => {
     });
 
     if (result?.success) {
-      // console.log("result",result)
       dispatch(loginSuccess(result.customer));
       toast.success("Logged in successfully!");
       navigate("/");
@@ -58,17 +57,20 @@ const LoginForm = () => {
     }
   };
 
+  const handleOAuthLogin = (provider) => {
+    window.location.href = `/api/auth/${provider}`;
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-300 dark:border-gray-700">
+
         <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
           Login
         </h2>
         <form className="mt-6 space-y-6" >
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
-              Email or Mobile Number
-            </label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">Email or Mobile Number</label>
             <input
               type="text"
               name="identifier"
@@ -77,14 +79,10 @@ const LoginForm = () => {
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.identifier && (
-              <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>
-            )}
+            {errors.identifier && <p className="text-red-500 text-sm mt-1">{errors.identifier}</p>}
           </div>
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
-              Password
-            </label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-1">Password</label>
             <input
               type="password"
               name="password"
@@ -93,9 +91,7 @@ const LoginForm = () => {
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
               required
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-            )}
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
           <button
             onClick={handleSubmit}
@@ -109,20 +105,27 @@ const LoginForm = () => {
             )}
           </button>
         </form>
-        <div className="flex flex-col items-center mt-4">
-          <Link
-            to="/forgot-password"
-            className="self-end text-sm text-blue-500 dark:text-blue-400 hover:underline"
+        {/* <div className="flex flex-col items-center mt-4 space-y-3">
+          <button
+            onClick={() => handleOAuthLogin("google")}
+            className="w-full flex items-center justify-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-md transition"
           >
+            Login with Google
+          </button>
+          <button
+            onClick={() => handleOAuthLogin("github")}
+            className="w-full flex items-center justify-center px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-md transition"
+          >
+            Login with GitHub
+          </button>
+        </div> */}
+        <div className="flex flex-col items-center mt-4">
+          <Link to="/forgot-password" className="self-end text-sm text-blue-500 dark:text-blue-400 hover:underline">
             Forgot Password?
           </Link>
-
           <p className="text-center text-gray-700 dark:text-gray-300 mt-3">
-            Don't have an account?{" "}
-            <a
-              href="/signup"
-              className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-            >
+            Don't have an account? {" "}
+            <a href="/signup" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
               Sign Up
             </a>
           </p>

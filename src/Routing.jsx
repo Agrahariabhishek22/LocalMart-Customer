@@ -1,5 +1,9 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import App from "./App";
 import Shops from "./pages/Shops";
 import Home from "./pages/Home";
@@ -24,7 +28,6 @@ import ContactUs from "./pages/ContactUs";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import UpdatePassword from "./components/auth/UpdatePassword";
 
-
 // import Payments from "./pages/Payments";
 // import Coupons from "./pages/Coupons";
 // import Returns from "./pages/Returns";
@@ -45,21 +48,24 @@ const router = createBrowserRouter([
       { path: "/profile", element: <Profile /> },
       {
         path: "/orders",
-        element:<Orders />,
-       },
+        element: <Orders />,
+      },
       { path: "/shop/:shopId", element: <ShopDetails /> },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
         errorElement: <Error />,
         children: [
-
           { index: true, element: <Navigate to="update-profile" replace /> }, // ✅ Relative Path
-{ path: "update-profile", element: <UpdateProfile /> },
+          { path: "update-profile", element: <UpdateProfile /> },
 
           // { path: "orders", element: <Orders /> },
           { path: "update-address", element: <UpdateAddress /> },
-         // { path: "logout", element: <Logout /> },
+          // { path: "logout", element: <Logout /> },
 
           // { path: "payments", element: <Payments /> },
           // { path: "coupons", element: <Coupons /> },
@@ -69,38 +75,42 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path:"/forgot-password",
-        element:<ForgotPassword/>
+        path: "/forgot-password",
+        element: <ForgotPassword />,
       },
       {
-        path:"/update-password/:id",
-        element:<UpdatePassword/>
+        path: "/update-password/:id",
+        element: <UpdatePassword />,
       },
       {
         path: "/cart",
-        element:<PrivateRoute><Cart /></PrivateRoute>,
-       },
-      
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        ),
+      },
+
       {
-        path:'/wishlist',
-        element:<Wishlist/>,
+        path: "/wishlist",
+        element: <Wishlist />,
       },
       {
         path: "/place-order",
-        element: <PlaceOrder/>,
-       },
-       {
-        path:"/about",
-        element:<AboutUs/>
-       },
-       {
-        path:"/contact",
-        element:<ContactUs/>
-       },
+        element: <PlaceOrder />,
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
       {
         path: "/test",
         element: <TestComponent Component={PlaceOrder} />,
-       },
+      },
     ],
   },
 ]);

@@ -43,6 +43,8 @@ const shopsSlice = createSlice({
    
     fetchProductsSuccess: (state, action) => {
        const   products  = action.payload;
+       console.log(action.payload);
+       
       const categorizedProducts = {};
 
       
@@ -60,7 +62,9 @@ const shopsSlice = createSlice({
         categorizedProducts[shopId][category].push(product);
         categorizedProducts[shopId]["All"].push(product);
       });
-
+      
+      console.log(categorizedProducts);
+      
       state.productsByShop = categorizedProducts;
     },
   },

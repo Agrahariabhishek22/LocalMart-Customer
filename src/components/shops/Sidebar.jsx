@@ -8,7 +8,7 @@ const Sidebar = ({setSideBar}) => {
   const selectedCategory = useSelector((state) => state.shops.selectedCategory);
 
   return (
-    <div className="z-50 text-black  dark:text-white">
+    <div className="z-50 text-black  dark:text-white min-h-screen">
       <h2 className="text-lg font-semibold text-center font-heading mb-4">Categories</h2>
       <ul className="space-y-2">
         {categories.map((category) => (

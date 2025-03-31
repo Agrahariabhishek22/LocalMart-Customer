@@ -11,6 +11,7 @@ const Orders = () => {
   const [selectedShop, setSelectedShop] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const groupOrdersByShop = (orders) => {
     return orders.reduce((acc, order) => {
       const shopName = order.shopId.shopName;
@@ -37,7 +38,6 @@ const Orders = () => {
     return <div className="flex justify-center items-center dark:bg-gray-900"><CardSkeleton/></div>
   }
   
-
   const filteredOrders = selectedShop
     ? orders[selectedShop].filter((order) =>
         selectedStatus === "All" ? true : order.status === selectedStatus
@@ -45,6 +45,7 @@ const Orders = () => {
     : [];
 
   return (
+
     <div className=" flex min-h-screen p-5 dark:bg-gray-900">
       {/* Sidebar Toggle Button */}
       <button

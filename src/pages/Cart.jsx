@@ -19,6 +19,7 @@ const Cart = () => {
   };
 
   return (
+
     <div className=" dark:bg-gray-600 p-4 h-[100vh] w-[100vw]">
       <h2 className="text-2xl font-bold font-heading text-center text-heading-dark dark:text-heading-light mb-4">
         Your Cart

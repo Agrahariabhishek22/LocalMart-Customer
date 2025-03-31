@@ -80,7 +80,7 @@ export async function buyProducts(amount, navigate, dispatch, callApi, orderData
                     if (orderResponse) {
                         toast.success("🎉 Order Placed Successfully!");
                         dispatch(clearCart(orderData.shopId));
-                        setTimeout(() => navigate("/dashboard/orders"), 1500);
+                        setTimeout(() => navigate("/orders"), 1500);
                     } else {
                         toast.error("Failed to place order. Try again.");
                     }

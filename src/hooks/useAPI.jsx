@@ -10,7 +10,7 @@ const useAPI = () => {
         setError(null);
        
         //url = `https://shopsy-backend-one.vercel.app/${url}`
-        url = `https://shopsy-backend-one.vercel.app/${url}`;
+        url = `http://localhost:3000/${url}`;
         console.log(url)
         try {
             const response = await axios({

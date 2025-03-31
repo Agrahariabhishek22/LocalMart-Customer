@@ -20,25 +20,18 @@ const [sidebarOpen,setSidebarOpen] = useState(false);
   const shops = useSelector((state)=>state.shops.shopsByCategory)
   //console.log(Object.keys(shops))
   useEffect(() => {
-    const fetchShops = async () => {
-
-  
+    const fetchShops = async () => {  
       const response = await callApi({ 
         url: `api/owner/getAllShops`, 
         method: "GET" 
       });
-
-     // console.log(response);
-      
+     console.log(response);
       if (response) {
         dispatch(fetchShopsSuccess(response?.data||[]));
         dispatch(fetchProductsSuccess(response?.products||[]))
         if(!selectedCategory)dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
       }
-      
-      
     };
-  
     if((Object.keys(shops)).length === 0){
       console.log(shops)
       fetchShops();

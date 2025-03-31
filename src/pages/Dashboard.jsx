@@ -48,7 +48,7 @@ const {callApi} = useAPI();
           // console.log("Logout Response:", response);
       };
   return (
-    <aside className="bg-background-light dark:bg-background-dark ">
+    <aside className="bg-background-light dark:bg-background-dark z-50 ">
       <div >
         <h2 className="text-heading-light dark:text-heading-dark text-2xl font-semibold mb-6">
           Dashboard
@@ -106,7 +106,7 @@ const Dashboard = () => {
     <div
         className={`fixed top-16 md:top-0 overflow-y overflow-scroll pb-20 left-0 h-[100vh] w-64 bg-background-light dark:bg-background-dark shadow-xl p-6 transition-transform transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:relative md:translate-x-0 md:w-60`}
+        } md:relative md:translate-x-0 md:w-60 z-50`}
       >
       <Sidebar toggleDarkMode={toggleDarkMode} darkMode={darkMode} setSidebarOpen={setSidebarOpen} />
       </div>

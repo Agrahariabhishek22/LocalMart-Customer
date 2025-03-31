@@ -5,6 +5,8 @@ import { addToCart, increaseQuantity, decreaseQuantity } from "../../redux/cartS
 import { addToWishlist, removeFromWishlist } from "../../redux/wishlistSlice";
 import { Heart } from "lucide-react";
 import EmptyState from "../../pages/EmptyState";
+import { toast } from "react-hot-toast";
+
 
 const ItemList = ({ items, category, shop }) => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const ItemList = ({ items, category, shop }) => {
 const [search,setSearch] = useState("");
   const handleCartAction = (item) => {
     if (!user) {
-      navigate("/login");
+      toast.error("Please Login first");
       return;
     }
     dispatch(addToCart({ shopId: shop._id, item: { ...item, shopName: shop.shopName } }));
@@ -30,6 +32,10 @@ const [search,setSearch] = useState("");
   };
 
   const handleWishlistToggle = (item) => {
+    if (!user) {
+      toast.error("Please Login first");
+      return;
+    }
     const isWishlisted = wishlist.some((wishItem) => wishItem.id === item._id);
     if (isWishlisted) {
       dispatch(removeFromWishlist(item._id));
@@ -37,6 +43,7 @@ const [search,setSearch] = useState("");
       dispatch(addToWishlist({ id: item._id, shopId: shop._id, shopName: shop.shopName, ...item }));
     }
   };
+
   if((Object.keys(items)).length === 0)return <div className="py-6 text-lg text-center"><EmptyState/></div>
   //console.log(items)
  if(search !== ""){
