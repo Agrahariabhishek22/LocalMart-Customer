@@ -25,11 +25,11 @@ const ShopDetails = () => {
   // console.log(shop)
 
   const productsByCategory = useSelector((state) => state.shops.productsByShop || {});
-  //  console.log(productsByCategory);
+   console.log(productsByCategory);
   
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-// console.log((productsByCategory[shopId]))
+console.log((productsByCategory[shopId]))
  if(!productsByCategory[shopId]){
   return <EmptyState/>
  }

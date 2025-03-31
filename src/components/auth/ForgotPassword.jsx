@@ -24,7 +24,7 @@ function ForgotPassword() {
       console.log("Reset Password Token Response....", response);
 
       if (!response.success) {
-        throw new Error(response.data.message);
+        toast.error(response.message)
       }
       toast.success("Reset email sent");
       setEmailSent(true);

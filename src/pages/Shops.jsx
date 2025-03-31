@@ -25,14 +25,12 @@ const [sidebarOpen,setSidebarOpen] = useState(false);
         url: `api/owner/getAllShops`, 
         method: "GET" 
       });
-     // console.log(response);
+     console.log(response);
       if (response) {
         dispatch(fetchShopsSuccess(response?.data||[]));
         dispatch(fetchProductsSuccess(response?.products||[]))
         if(!selectedCategory)dispatch(setSelectedCategory(response?.data[0]?.shopCategory));
       }
-      
-      
     };
     if((Object.keys(shops)).length === 0){
       console.log(shops)
