@@ -44,7 +44,7 @@ const ShopList = () => {
   return (
     <div className="flex-1 pl-10 p-2 md:p-6  text-black dark:text-white">
       {/* Search  */}
-      <div className=" my-2 w-full max-w-2xl flex items-center bg-gradient-to-r from-gray-800 to-gray-900 rounded-full shadow-md overflow-hidden">
+      <div className=" my-2 m-auto w-full max-w-2xl flex items-center bg-gradient-to-r from-gray-800 to-gray-900 rounded-full shadow-md overflow-hidden">
         <input
           type="text"
           onChange={(e) => handleChange(e.target.value)}
@@ -61,10 +61,11 @@ const ShopList = () => {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {shops.map((shop) => (
             <div
+            onClick={() => handleShopClick(shop._id)}
               key={shop._id}
               className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900 
              p-2 md:p-3 rounded-xl shadow-lg transition-all duration-300 
-             hover:shadow-xl hover:-translate-y-1 cursor-pointer flex flex-col items-center gap-y-2"
+             hover:shadow-xl  cursor-pointer flex flex-col items-center gap-y-2"
             >
               {/* Image */}
               <img
@@ -80,7 +81,7 @@ const ShopList = () => {
               </h4>
 
               {/* Address */}
-              <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm  text-center">
+              <p className="text-amber-300  text-xs md:text-sm  text-center">
                 {shop.shopAddress}
               </p>
               {selectedCategory === "All" && (
@@ -97,11 +98,11 @@ const ShopList = () => {
                   shop.shopStatus == "OPEN" ? "bg-green-600" : "bg-red-500"
                 }`}
               >
-                {shop.shopStatus}
+                SHOP IS {shop.shopStatus}
               </h1>
 
               <button
-                onClick={() => handleShopClick(shop._id)}
+                
                 className="flex items-center justify-center w-full px-4 py-2 text-sm md:text-base font-semibold 
                       text-white rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 
                       dark:from-blue-600 dark:to-purple-600 

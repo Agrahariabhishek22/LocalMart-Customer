@@ -44,7 +44,7 @@ if(loading){
   return (
     <div className="min-h-screen flex bg-gradient-to-r from-emerald-500 to-teal-500 dark:from-emerald-600 dark:to-teal-700">
       <div
-        className={`fixed top-16 md:top-0 overflow-y overflow-scroll pb-20 left-0 h-[100vh] w-64 md:w-80 bg-background-light dark:bg-background-dark shadow-xl p-6 transition-transform transform ${
+        className={`fixed top-16 md:top-0 overflow-y overflow-scroll  pb-20 left-0 h-full border-2 border-red-500 w-64 md:w-80 bg-background-light dark:bg-background-dark shadow-xl p-6 transition-transform transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0 md:w-60`}
       >

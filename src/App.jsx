@@ -11,7 +11,7 @@ function App() {
  
   return (
     <div>
-     <Toaster position="top-right" reverseOrder={false} />
+     <Toaster position="bottom-right" reverseOrder={false} />
      <ToastContainer position="bottom-right" autoClose={3000} />
       <Navbar/>
       <Outlet/>

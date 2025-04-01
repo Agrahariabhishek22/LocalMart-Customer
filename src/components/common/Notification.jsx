@@ -20,7 +20,7 @@ console.log("Notification")
       });
     console.log(data)
       if (data) {
-        dispatch(setNotifications(data)); // Store notifications in Redux
+        dispatch(setNotifications(data)); 
       }
     };
 

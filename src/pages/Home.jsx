@@ -1,5 +1,5 @@
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown,Store } from "lucide-react";
 import { useState,useEffect } from "react";
 import { FaEnvelope, FaPhone, FaArrowCircleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -67,15 +67,19 @@ if(loading){
         <div className="md:w-1/2 text-center md:text-left">
           <h1 className="text-xl sml:text-3xl md:text-5xl font-heading font-extrabold leading-tight drop-shadow-lg text-cyan-700 dark:text-cyan-300">Shop Locally, Order Instantly</h1>
           <p className="text-lg font-sub-heading mt-2 text-emerald-600 dark:text-emerald-300 opacity-90">Discover nearby shops and get what you need instantly.</p>
-          <button onClick={() => navigate("/shops")} className="mt-6 bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:opacity-90 transition">
-            Explore Shops
-          </button>
+          <button
+      onClick={() => navigate("/shops")}
+      className="mt-6 text-2xl md:text-4xl text-center m-auto bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:brightness-110 transition flex items-center gap-2"
+    >
+      <Store className="md:w-8 md:h-8 w-6 h-6" />
+      Explore Shops
+    </button>
         </div>
-        <img src={heroImage} alt="Shopping" className="w-[300px] h-[300px] rounded-lg shadow-lg mb-6 m-4  md:m-0" />
+        <img src={heroImage} alt="Shopping" className="h-[250px] w-[300px] md:h-[300px] rounded-lg shadow-lg mb-6 m-4  md:m-0" />
       </section>
 
       {/* Categories Section */}
-      <section className="py-12 px-6   ">
+      <section className=" md:py-12 px-6   ">
         <div className=" text-center ">
           <h2 className="text-3xl font-semibold font-heading mb-6 text-cyan-700 dark:text-cyan-300">Categories</h2>
          <div className="flex flex-col justify-around md:flex-row items-center">
@@ -143,11 +147,11 @@ if(loading){
           <div className="mt-4 space-y-2">
             <div className="flex items-center justify-center gap-2">
               <FaEnvelope className="w-5 h-5" />
-              <p>support@shopsy.com</p>
+              <p>support@localmart.com</p>
             </div>
             <div className="flex items-center justify-center gap-2">
               <FaPhone className="w-5 h-5" />
-              <p>+123 456 7890</p>
+              <p>+918923902345</p>
             </div>
           </div>
         </div>
