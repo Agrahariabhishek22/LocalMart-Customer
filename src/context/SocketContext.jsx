@@ -14,8 +14,8 @@ export const SocketProvider = ({ children }) => {
 
     if(!id)return;
     console.log("shopkeeper context called")
-    const newSocket = io("http://localhost:3000", { withCredentials: true });
-    //const newSocket = io("https://shopsy-backend-one.vercel.app", { withCredentials: true });
+   // const newSocket = io("http://localhost:3000", { withCredentials: true });
+    const newSocket = io("https://shopsy-backend-production.up.railway.app", { withCredentials: true });
     newSocket.emit("joinCustomer",id);
 
     newSocket.on("OrderStatusUpdated", (data) => {
