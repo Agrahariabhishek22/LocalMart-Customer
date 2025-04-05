@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaHome, FaGlobe } from "react-icons/fa";
 
 const UserProfile = ({ user }) => {
-  const { name, email, mobileNumber, location, address } = user;
+  const { name, email, mobileNumber, location, address ,avatar} = user;
   //const googleMapsUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${location.coordinates[1]},${location.coordinates[0]}`;
 
   return (
@@ -12,7 +12,8 @@ const UserProfile = ({ user }) => {
         {/* Avatar */}
         <div className="w-24 h-24 mx-auto mb-4">
           <div className="w-full h-full rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 text-3xl">
-            <FaUser />
+           <img src={avatar} alt="Avatar"
+            className="w-full h-full rounded-full border-4 border-gray-300 dark:border-gray-600 shadow-md object-cover"/>
           </div>
         </div>
 
@@ -83,7 +84,7 @@ const UserProfile = ({ user }) => {
 // Example User Data
 const userData = {
   name: "Abhishek",
-  email: "balajeet22@gmail.com",
+  email: "balajeet@gmail.com",
   mobileNumber: "1212121212",
   location: { type: "Point", coordinates: [80.2817, 26.5001] }, // Example coordinates (Latitude, Longitude)
   addresses: [
@@ -109,6 +110,6 @@ const userData = {
 // Usage
 export default function Profile() {
     const { customer } = useSelector((state) => state?.customer);
-    console.log(customer)
+    //console.log(customer)
   return <UserProfile user={customer} />;
 }

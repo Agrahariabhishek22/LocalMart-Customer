@@ -12,14 +12,18 @@ import {
   LayoutDashboard,
   Info,
   Phone,
-  Package,
+
   LogIn,
   UserPlus,
   Menu,
   X,
   Sun,
   Moon,
+  Home, Store,
+  Package,
+  
 } from "lucide-react";
+import LOGO from "../../assets/logo.jpg"
 import NotificationBell from "./Notification";
 
 const Navbar = () => {
@@ -62,41 +66,51 @@ const Navbar = () => {
             onClick={() => setIsOpen(false)}
             className="text-black dark:text-white text-xl font-bold"
           >
-            ShopEase
+           <img src={LOGO} className="rounded-full w-12 h-12"/>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">
             <Link
               to="/"
-              className={`text-black dark:text-white px-3 py-2 rounded-md ${
+              className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
                 currentPath === "/"
+                  ? "bg-blue-500  text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-800"
+              }`}
+            >
+             <Home className="w-5 h-5"/> Home
+            </Link>
+            <Link
+              to="/shops"
+              className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
+                currentPath === "/shops"
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200 dark:hover:bg-gray-800"
               }`}
             >
-              Shops
+             <Store className="w-5 h-5"/> Shops
             </Link>
             <Link
               to="/about"
-              className={`text-black dark:text-white px-3 py-2 rounded-md ${
+              className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
                 currentPath === "/about"
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-500  text-white"
                   : "hover:bg-gray-200 dark:hover:bg-gray-800"
               }`}
             >
-              About
+             <Info className="w-5 h-5"/> About
             </Link>
             {/*  <NotificationBell /> */}
             <Link
               to="/contact"
-              className={`text-black dark:text-white px-3 py-2 rounded-md ${
+              className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
                 currentPath === "/contact"
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-500  text-white"
                   : "hover:bg-gray-200 dark:hover:bg-gray-800"
               }`}
             >
-              Contact
+            <Phone size={20}/>  Contact
             </Link>
             {!isAuthenticated && (
               <>
@@ -113,7 +127,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/signup"
-                  className="flex items-center gap-3 p-2 bg-heading-dark dark:bg-heading-light text-background-dark dark:text-background-light rounded-lg text-center justify-center hover:opacity-90"
+                  className="flex items-center gap-3 p-2 bg-heading-dark dark:bg-red-400 text-background-dark dark:text-background-light rounded-lg text-center justify-center hover:opacity-90"
                 >
                   <UserPlus size={20} /> Create Account
                 </Link>
@@ -123,23 +137,23 @@ const Navbar = () => {
               <>
                 <Link
                   to="/orders"
-                  className={`text-black dark:text-white px-3 py-2 rounded-md ${
+                  className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
                     currentPath === "/orders"
                       ? "bg-blue-500 text-white"
                       : "hover:bg-gray-200 dark:hover:bg-gray-800"
                   }`}
                 >
-                  Orders
+                 <Package size={20}/> Orders
                 </Link>
                 <Link
                   to="/wishlist"
-                  className={`text-black dark:text-white px-3 py-2 rounded-md ${
+                  className={`text-black flex flex-row gap-x-2 dark:text-white px-3 py-2 rounded-md ${
                     currentPath === "/wishlist"
                       ? "bg-blue-500 text-white"
                       : "hover:bg-gray-200 dark:hover:bg-gray-800"
                   }`}
                 >
-                  Wishlist
+                 <Heart size={20}/> Wishlist
                 </Link>
               </>
             )}
@@ -188,15 +202,15 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden grid grid-cols-2 dark:bg-background-dark bg-background-light p-4 shadow-lg rounded-lg space-y-2 text-base font-medium dark:text-white text-black">
           <Link
-            to="/cart"
+            to="/shops"
             onClick={() => setIsOpen(false)}
             className={`flex relative   items-center gap-3 p-2 rounded-lg ${
-              currentPath === "/cart"
+              currentPath === "/shops"
                 ? "bg-blue-500 text-white"
                 : "hover:bg-gray-200 dark:hover:bg-gray-800"
             }`}
           >
-            <ShoppingCart size={24} /> Cart
+            <Store size={24} /> Shops
             {cart && Object.keys(cart).length > 0 && (
               <span className="absolute  bottom-5 left-5 bg-green-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {Object.keys(cart).length}
@@ -213,6 +227,17 @@ const Navbar = () => {
             }`}
           >
             <Info size={20} /> About
+          </Link>
+          <Link
+            to="/"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center gap-3 p-2 rounded-lg ${
+              currentPath === "/"
+                ? "bg-blue-500 text-white"
+                : "hover:bg-gray-200 dark:hover:bg-gray-800"
+            }`}
+          >
+            <Home size={20} /> Home
           </Link>
           <Link
             to="/contact"
@@ -271,17 +296,7 @@ const Navbar = () => {
               >
                 <User size={20} /> Profile
               </Link>
-              <Link
-                to="/shops"
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 p-2 rounded-lg ${
-                  currentPath === "/shops"
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-800"
-                }`}
-              >
-                <ShoppingBasket size={20} /> Shops
-              </Link>
+             
             </>
           ) : (
             <>
@@ -301,7 +316,7 @@ const Navbar = () => {
                 className={`flex items-center gap-3 p-2 bg-heading-dark dark:bg-heading-light text-background-dark dark:text-background-light rounded-lg text-center justify-center hover:opacity-90 ${
                   currentPath === "/signup"
                     ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-800"
+                    : "hover:bg-gray-200 dark:bg-red-400"
                 }`}
               >
                 <UserPlus size={20} /> Create Account

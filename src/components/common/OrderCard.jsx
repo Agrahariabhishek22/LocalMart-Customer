@@ -14,7 +14,7 @@ const OrderCard = ({ order }) => {
           <strong>Products:</strong> {order.products.map((p) => p.name).join(", ")}
         </p>
         <p className="dark:text-white">
-          <strong>Order Date:</strong> {new Date(order.createdAt).toLocaleDateString()}
+          <strong>Order Date & Time:</strong> {new Date(order.createdAt).toLocaleDateString()  } - {new Date(order.createdAt).toLocaleTimeString().toUpperCase()} 
         </p>
       </div>
     );

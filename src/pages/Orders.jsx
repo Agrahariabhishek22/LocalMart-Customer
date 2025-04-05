@@ -23,7 +23,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const response = await callApi({ url: "api/order/customer" });
-
+      console.log(response)
       if (response?.success) {
         const groupedOrders = groupOrdersByShop(response.orders);
         setOrders(groupedOrders);
@@ -91,7 +91,7 @@ const Orders = () => {
 
             {/* Order Status Tabs */}
             <div className="flex flex-wrap gap-4 mt-4">
-              {["All", "Delivered", "Pending", "Processing"].map((status) => (
+              {["All", "Delivered", "Pending", "Cancelled","Accepted"].map((status) => (
                 <button
                   key={status}
                   className={`px-4 py-2 font-sub-heading rounded-lg transition-all duration-300 
