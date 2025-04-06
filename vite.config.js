@@ -9,7 +9,8 @@ export default defineConfig({
     react()
   ],
   server: {
-    host: '0.0.0.0',                 // allow external connections
-    port: process.env.PORT || 5173,  // use PORT provided by Render or fallback
+    host: '0.0.0.0',                
+    port: process.env.PORT || 5173, 
+     allowedHosts: ['shopsy-customer.onrender.com'],
   }
 })
